@@ -40,13 +40,11 @@ public class Main extends Application {
 	public void start(Stage gameStage) throws Exception {
 		int x = 0;	
 		gameStage.setTitle("TotallyAwesomeGame, sort of");
-		gameStage.setWidth(1000);
-		gameStage.setHeight(800);
+		gameStage.setWidth(600);
+		gameStage.setHeight(700);
 		GameModel model = new GameModel();
-		GameFrame frame = new GameFrame(model, 1000, 800);
+		GameFrame frame = new GameFrame(model, 600, 700);
 		Scene gameScene = new Scene(frame);
-		
-		int x1 = 0;
 		
 		// Set the target number of frames per second
 		final double targetFps = 50.0;

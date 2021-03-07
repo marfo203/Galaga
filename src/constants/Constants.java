@@ -16,6 +16,6 @@ public interface Constants {
 	/*
 	 * Define the size of the window
 	 */
-	int SCREEN_WIDTH = 1000;
-	int SCREEN_HEIGHT = 800;
+	int SCREEN_WIDTH = 600;
+	int SCREEN_HEIGHT = 700;
 }

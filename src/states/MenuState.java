@@ -22,15 +22,11 @@ public class MenuState extends GameState {
 	private String informationText;
 	private Color bgColor;
 	private Color fontColor;
-	// A PlayState, so we can change to the PlayState from the menu.
-	private PlayState playState;
-
 	public MenuState(GameModel model) {
 		super(model);
-		playState = new PlayState(model);
-		informationText = "Press Enter To Play\nEscape to exit";
-		bgColor = Color.GREEN;
-		fontColor = Color.RED;
+		informationText = "Press Enter To Play\nPress H for Highscore\nPress Escape to exit";
+		bgColor = Color.BLACK;
+		fontColor = Color.WHITE;
 	}
 
 	/**
@@ -43,7 +39,7 @@ public class MenuState extends GameState {
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); // Big letters
 		// Print the information text, centered on the canvas
-		g.fillText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		g.fillText(informationText, SCREEN_WIDTH / 2-150, SCREEN_HEIGHT / 2);
 		// Can also use:
 		// g.setStroke(fontColor);
 		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -63,9 +59,11 @@ public class MenuState extends GameState {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
 
 		if (key.getCode() == KeyCode.ENTER) {
-			model.switchState(playState);
+			model.switchState(new PlayState(model));
 		} else if (key.getCode() == KeyCode.ESCAPE) {
 			System.exit(0);
+		} else if (key.getCode() == KeyCode.H) {
+			model.switchState(new HighScoreState(model));
 		}
 	}
 

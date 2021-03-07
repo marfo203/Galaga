@@ -1,6 +1,7 @@
 package states;
 
 import testing.Tester;
+import main.Player;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -39,6 +40,7 @@ public class PlayState extends GameState {
 
 	/* Class only used for testing */
 	private Tester tester;
+	private Player player;
 
 	public PlayState(GameModel model) {
 		super(model);
@@ -47,6 +49,7 @@ public class PlayState extends GameState {
 		fontColor = Color.BLUE;
 
 		tester = new Tester();
+		player = new Player(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, null, null);
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class PlayState extends GameState {
 	public void update() {
 		// Here one would probably instead move the player and any
 		// enemies / moving obstacles currently active.
-		tester.update();
+		player.update();
 	}
 
 	/**
