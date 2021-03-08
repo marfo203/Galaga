@@ -47,7 +47,7 @@ public class Main extends Application {
 		Scene gameScene = new Scene(frame);
 		
 		// Set the target number of frames per second
-		final double targetFps = 50.0;
+		final double targetFps = 120.0;
 		// Calculate frequency in nano seconds
 		final double nanoPerUpdate = 1000000000.0 / targetFps;
 

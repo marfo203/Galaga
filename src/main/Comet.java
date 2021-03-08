@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 
 public class Comet extends Ship {
@@ -10,9 +12,9 @@ public class Comet extends Ship {
 	private int posX;
 	private int posY;
 	private int size;
-	private Image comet;
+	private ArrayList<Image> comet;
 
-	public Comet(int posX, int posY, int size, Image comet) {
+	public Comet(int posX, int posY, int size, ArrayList<Image> comet) {
 		super(posX, posY, size, comet);
 		
 		this.posX = posX;
@@ -32,6 +34,10 @@ public class Comet extends Ship {
 				posY += size;
 			}
 		}
+	}
+
+	@Override
+	public void CollisionCheck() {
 	}
 
 	

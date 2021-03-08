@@ -1,6 +1,7 @@
 package states;
 
 import testing.Tester;
+import main.Enemy;
 import main.Player;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -15,6 +16,7 @@ import static constants.Constants.SCREEN_WIDTH;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * This state represents the Playing State of the Game The main responsibility
@@ -43,23 +45,31 @@ public class PlayState extends GameState {
 	private Color fontColor;
 
 	/* Class only used for testing */
-	private Tester tester;
+//	private Tester tester;
 	private Player player;
 	private Image ship;
+	private Image deadship;
+	private ArrayList<Image> images = new ArrayList<Image>();
+	private Image TieFighter;
+	private Enemy enemy;
 
 	public PlayState(GameModel model, GraphicsContext gc) {
 		super(model);
-		informationText = "Press Escape To Return To The Menu";
 		bgColor = Color.BLACK;
 		fontColor = Color.BLUE;
 		
 		try {
 			ship = new Image(new FileInputStream("ship.png"));
+			deadship = new Image(new FileInputStream("explosion.png"));
+			TieFighter = new Image(new FileInputStream("TieFighter.png"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
-
-		player = new Player(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, ship, gc);
+		images.add(ship);
+		images.add(deadship);
+		images.add(TieFighter);
+		player = new Player(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, images, gc);
+		enemy = new Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, images, gc);
 	}
 
 	/**
@@ -71,7 +81,6 @@ public class PlayState extends GameState {
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); // Big letters
-		g.fillText(informationText, SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 3);
 		// Can also use:
 		// g.setStroke(fontColor);
 		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -79,6 +88,7 @@ public class PlayState extends GameState {
 		// This could be a call to all our objects that we want to draw.
 		// Using the tester simply to illustrate how it could work.
 		player.update();
+		enemy.update();
 	}
 
 	@Override

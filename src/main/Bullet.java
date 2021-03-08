@@ -1,5 +1,6 @@
 package main;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -13,6 +14,9 @@ public class Bullet {
 	private int size;
 	private Image bullet;
 	private int direction;
+	private int height = 10;
+	private int width = 10;
+	private Rectangle2D bullethitbox = new Rectangle2D(posX, posY, height, width);
 
 	public Bullet(double posX, double posY, int direction, GraphicsContext gc) {
 
@@ -35,7 +39,7 @@ public class Bullet {
 			} else {
 				gc.setFill(Color.RED);
 			}
-			gc.fillOval(this.posX, this.posY, 10, 10);
+			gc.fillOval(this.posX, this.posY, height, width);
 		}
 	}
 
@@ -47,7 +51,14 @@ public class Bullet {
 			gc.setFill(Color.RED);
 		}
 		gc.fillOval(this.posX, this.posY, 10, 10);
+	}
 
+	public Rectangle2D getBullethitbox() {
+		return bullethitbox;
+	}
+
+	public void setBullethitbox(Rectangle2D bullethitbox) {
+		this.bullethitbox = bullethitbox;
 	}
 
 }
