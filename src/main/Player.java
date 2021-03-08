@@ -23,6 +23,7 @@ public class Player extends Ship {
 		this.size = size;
 		this.ship = ship;
 		this.gc = gc;
+		//En liten ändring
 	}
 
 	public Bullet Shoot() {
@@ -39,7 +40,6 @@ public class Player extends Ship {
 	}
 
 	public void move(KeyEvent key) {
-		if (posX > 0 && posX < 600) {
 			if (key.getCode() == KeyCode.RIGHT) {
 				this.posX += 15;
 			} else {
@@ -47,5 +47,3 @@ public class Player extends Ship {
 			}
 		}
 	}
-
-}
