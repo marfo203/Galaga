@@ -89,6 +89,10 @@ public class PlayState extends GameState {
 			model.switchState(new MenuState(model));
 		if ((key.getCode() == KeyCode.LEFT) || (key.getCode() == KeyCode.RIGHT))
 			player.move(key);
+		if(key.getCode() == KeyCode.SPACE) {
+			player.Shoot();
+		}
+		
 	}
 
 	@Override

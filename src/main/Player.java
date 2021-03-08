@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -14,6 +16,7 @@ public class Player extends Ship {
 	private Image deadShip;
 	private GraphicsContext gc;
 	private int health = 3;
+	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 	public Player(double posX, double posY, int size, Image ship, GraphicsContext gc) {
 		super(posX, posY, size, ship);
@@ -26,13 +29,19 @@ public class Player extends Ship {
 		//En liten ändring
 	}
 
-	public Bullet Shoot() {
-		return new Bullet(this.posX, this.posY - (size / 2), -1);
+	public void Shoot() {
+		Bullet bullet = new Bullet(this.posX, this.posY - (size / 2), -1, gc);
+		bullets.add(bullet);
+		
+		 
 	}
 
 	public void update() {
 		if (!dead) {
 			gc.drawImage(ship, posX, posY - 30, size * 4, size * 5);
+			for (int i = 0; i < bullets.size(); i++) {
+				bullets.get(i).update();		
+			}
 		} else {
 			gc.drawImage(deadShip, posY, posX, size, size);
 		}
