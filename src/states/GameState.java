@@ -48,7 +48,7 @@ public abstract class GameState {
 	 * What this means is that if a state only wants to know if a certain key has
 	 * been pressed, the state needs to check for that event inside this function.
 	 */
-	public abstract void keyPressed(KeyEvent key);
+	public abstract void keyPressed(KeyEvent key, GraphicsContext gc);
 
 	/**
 	 *

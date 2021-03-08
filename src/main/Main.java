@@ -60,7 +60,7 @@ public class Main extends Application {
 			public void handle(KeyEvent event) {
 				// We send it on to the model, to handle it in the various
 				// states of the game.
-				model.keyPressed(event);
+				model.keyPressed(event, frame.getGC());
 			}
 		});
 

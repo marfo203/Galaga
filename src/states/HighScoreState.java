@@ -36,7 +36,7 @@ public class HighScoreState extends GameState {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent key) {
+	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getText() + " i HighScoreState");
 		
 		if (key.getCode() == KeyCode.ESCAPE)

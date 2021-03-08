@@ -2,6 +2,8 @@ package main;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class Player extends Ship {
 	private boolean dead = false;
@@ -24,21 +26,26 @@ public class Player extends Ship {
 	}
 
 	public Bullet Shoot() {
-		return new Bullet(this.posX, this.posY-(size/2), -1);
+		return new Bullet(this.posX, this.posY - (size / 2), -1);
 	}
-
-//	public void TakeDamage() {
-//		if (ShotHit || CometHit) {
-//		--health;
-//	}
-//	}
 
 	public void update() {
 		if (!dead) {
-			gc.drawImage(ship, posX, posY, size, size * 1.5);
+			gc.drawImage(ship, posX, posY - 30, size * 4, size * 5);
 		} else {
 			gc.drawImage(deadShip, posY, posX, size, size);
 		}
 
 	}
+
+	public void move(KeyEvent key) {
+		if (posX > 0 && posX < 600) {
+			if (key.getCode() == KeyCode.RIGHT) {
+				this.posX += 15;
+			} else {
+				this.posX -= 15;
+			}
+		}
+	}
+
 }

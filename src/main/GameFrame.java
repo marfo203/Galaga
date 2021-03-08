@@ -1,5 +1,6 @@
 package main;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.HBox;
 import states.GameModel;
 
@@ -12,15 +13,21 @@ import states.GameModel;
  *
  */
 public class GameFrame extends HBox {
-	private GamePanel g;
+	private GamePanel panel;
+	private GraphicsContext gc;
 
 	public GameFrame(GameModel model, int width, int height) {
 		// Create a new GamePanel and add's it to the frame
-		g = new GamePanel(model, width, height);
-		this.getChildren().add(g);
+		panel = new GamePanel(model, width, height);
+		this.getChildren().add(panel);
+		gc = panel.getGC();
 	}
 
 	public void repaint() {
-		g.repaint();
+		panel.repaint();
+	}
+
+	public GraphicsContext getGC() {
+		return gc;
 	}
 }

@@ -4,6 +4,7 @@ import testing.Tester;
 import main.Player;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -11,6 +12,9 @@ import javafx.scene.text.Font;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * This state represents the Playing State of the Game The main responsibility
@@ -41,15 +45,21 @@ public class PlayState extends GameState {
 	/* Class only used for testing */
 	private Tester tester;
 	private Player player;
+	private Image ship;
 
-	public PlayState(GameModel model) {
+	public PlayState(GameModel model, GraphicsContext gc) {
 		super(model);
 		informationText = "Press Escape To Return To The Menu";
 		bgColor = Color.BLACK;
 		fontColor = Color.BLUE;
+		
+		try {
+			ship = new Image(new FileInputStream("ship.png"));
+		} catch (FileNotFoundException e) {
+			System.out.println("Unable to find image-files!");
+		}
 
-		tester = new Tester();
-		player = new Player(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, null, null);
+		player = new Player(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, ship, gc);
 	}
 
 	/**
@@ -61,29 +71,31 @@ public class PlayState extends GameState {
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); // Big letters
-		g.fillText(informationText, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3);
+		g.fillText(informationText, SCREEN_WIDTH / 3 - 150, SCREEN_HEIGHT / 3);
 		// Can also use:
 		// g.setStroke(fontColor);
 		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
 		// This could be a call to all our objects that we want to draw.
 		// Using the tester simply to illustrate how it could work.
-		tester.delegate(g);
+		player.update();
 	}
 
 	@Override
-	public void keyPressed(KeyEvent key) {
+	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getCode() + " i PlayState");
 
 		if (key.getCode() == KeyCode.ESCAPE)
 			model.switchState(new MenuState(model));
+		if ((key.getCode() == KeyCode.LEFT) || (key.getCode() == KeyCode.RIGHT))
+			player.move(key);
 	}
 
 	@Override
 	public void update() {
 		// Here one would probably instead move the player and any
 		// enemies / moving obstacles currently active.
-		player.update();
+//		player.update();
 	}
 
 	/**

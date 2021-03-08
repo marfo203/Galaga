@@ -55,11 +55,11 @@ public class MenuState extends GameState {
 	 *            For more information see GameState
 	 */
 	@Override
-	public void keyPressed(KeyEvent key) {
+	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
 
 		if (key.getCode() == KeyCode.ENTER) {
-			model.switchState(new PlayState(model));
+			model.switchState(new PlayState(model, gc));
 		} else if (key.getCode() == KeyCode.ESCAPE) {
 			System.exit(0);
 		} else if (key.getCode() == KeyCode.H) {

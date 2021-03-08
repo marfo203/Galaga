@@ -47,8 +47,8 @@ public class GameModel {
 	 * 
 	 * @param key
 	 */
-	public void keyPressed(KeyEvent key) {
-		currentState.keyPressed(key);
+	public void keyPressed(KeyEvent key, GraphicsContext gc) {
+		currentState.keyPressed(key, gc);
 	}
 
 	/**
