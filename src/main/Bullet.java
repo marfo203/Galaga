@@ -16,7 +16,7 @@ public class Bullet {
 	private int direction;
 	private int height = 10;
 	private int width = 10;
-	private Rectangle2D bullethitbox = new Rectangle2D(posX, posY, height, width);
+	private Rectangle2D bulletHitbox;
 
 	public Bullet(double posX, double posY, int direction, GraphicsContext gc) {
 
@@ -33,6 +33,7 @@ public class Bullet {
 	public void update() {
 		if (!hitTarget) {
 			this.posY += speed * direction;
+			bulletHitbox = new Rectangle2D(posX, posY, height, width);
 			if (this.direction == -1) {
 				gc.setFill(Color.LIMEGREEN); // Här kan vi ju använda bilder på något som skott istället men najs om man
 												// ser tydligt "goda" och "onda" skott.
@@ -54,11 +55,11 @@ public class Bullet {
 	}
 
 	public Rectangle2D getBullethitbox() {
-		return bullethitbox;
+		return bulletHitbox;
 	}
 
 	public void setBullethitbox(Rectangle2D bullethitbox) {
-		this.bullethitbox = bullethitbox;
+		this.bulletHitbox = bullethitbox;
 	}
 
 }

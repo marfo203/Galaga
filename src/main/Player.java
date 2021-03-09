@@ -18,7 +18,7 @@ public class Player extends Ship {
 	private int health = 3;
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private int shipspeed = 20;
-	private Rectangle2D shiphitbox = new Rectangle2D(posX, posY, height, width);
+	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
 	private Bullet bullet;
 	private ArrayList<Image> images;
 
@@ -54,18 +54,43 @@ public class Player extends Ship {
 			} else {
 				this.posX -= shipspeed;
 			}
+			checkBoundaries();
+		}
+	}
+
+	private void checkBoundaries() {
+
+		if (posX < 0) {
+			posX = 0;
+		}
+		if (posX > 550) {
+			posX = 550;
 		}
 	}
 
 	public void CollisionCheck() {
-		if (shiphitbox.intersects(bullet.getBullethitbox())) {
-			health -= 1;
+		for (int i = 0; i < bullets.size(); i++) {
+			if (shipHitbox.intersects(bullets.get(i).getBullethitbox())) {
+				health -= 1;
+			}
+
 		}
+
 	}
 
 	public void IsDead() {
 		if (health == 0) {
 			dead = true;
 		}
+	}
+
+	public Rectangle2D  getHitbox() {
+		
+		return shipHitbox;
+	}
+
+	public ArrayList<Bullet> getpBullets() {
+		// TODO Auto-generated method stub
+		return bullets;
 	}
 }

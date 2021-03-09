@@ -17,6 +17,7 @@ import static constants.Constants.SCREEN_WIDTH;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * This state represents the Playing State of the Game The main responsibility
@@ -57,7 +58,7 @@ public class PlayState extends GameState {
 		super(model);
 		bgColor = Color.BLACK;
 		fontColor = Color.BLUE;
-		
+
 		try {
 			ship = new Image(new FileInputStream("ship.png"));
 			deadship = new Image(new FileInputStream("explosion.png"));
@@ -68,8 +69,8 @@ public class PlayState extends GameState {
 		images.add(ship);
 		images.add(deadship);
 		images.add(TieFighter);
-		player = new Player(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, images, gc);
-		enemy = new Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT-50, 10, images, gc);
+		player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
+		enemy = new Enemy(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
 	}
 
 	/**
@@ -87,8 +88,12 @@ public class PlayState extends GameState {
 
 		// This could be a call to all our objects that we want to draw.
 		// Using the tester simply to illustrate how it could work.
+		
+		
 		player.update();
 		enemy.update();
+		checkCollision();
+		
 	}
 
 	@Override
@@ -99,17 +104,30 @@ public class PlayState extends GameState {
 			model.switchState(new MenuState(model));
 		if ((key.getCode() == KeyCode.LEFT) || (key.getCode() == KeyCode.RIGHT))
 			player.move(key);
-		if(key.getCode() == KeyCode.SPACE) {
+		if (key.getCode() == KeyCode.SPACE) {
 			player.Shoot();
 		}
-		
+
 	}
 
 	@Override
 	public void update() {
 		// Here one would probably instead move the player and any
 		// enemies / moving obstacles currently active.
-//		player.update();
+		
+	}
+
+	private void checkCollision() {
+		for (int i = 0; i < player.getpBullets().size(); i++) {
+			
+			if (player.getpBullets().get(i).getBullethitbox().intersects(enemy.getHitbox())) {
+				
+				enemy.takeDamage();
+				
+				
+			}
+		}
+		
 	}
 
 	/**
@@ -118,7 +136,7 @@ public class PlayState extends GameState {
 	 */
 	@Override
 	public void activate() {
-		
+
 	}
 
 	/**
@@ -127,7 +145,7 @@ public class PlayState extends GameState {
 	 */
 	@Override
 	public void deactivate() {
-		
+
 	}
 
 }

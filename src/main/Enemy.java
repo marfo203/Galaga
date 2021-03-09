@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -15,24 +16,33 @@ public class Enemy extends Ship {
 	private int width = 65;
 	private ArrayList<Image> images;
 	private GraphicsContext gc;
+	
+	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	public Rectangle2D enemyHitbox;
+	private Image ship;
 
-	public Enemy(double posX, double posY, int size, ArrayList<Image> enemy, GraphicsContext gc) {
-		super(posX, posY, size, enemy);
+	public Enemy(double posX, double posY, int size, ArrayList<Image> images, GraphicsContext gc) {
+		super(posX, posY, size, images);
 		this.posX = posX;
 		this.posY = posY;
-		this.images = enemy;
+		this.images = images;
 		this.gc = gc;
+		this.ship = images.get(2);
+		
 
 	}
 
 	public void update() {
-		if (!dead) {
-			gc.drawImage((Image) images.get(2), posX - 300, posY - 650, width, height);
-			enemyMovement();
+		
+			
+			gc.drawImage(ship, posX - 300, posY - 650, width, height);
+			enemyHitbox = new Rectangle2D(posX-300, posY-650, height, width);
+			if (!dead) {
+				enemyMovement();
 		}
 	}
 	public void enemyMovement() {
-		posX += 3;
+		posX += 1;
 	}
 
 //	public Bullet Shoot(GraphicsContext gc) {
@@ -41,6 +51,17 @@ public class Enemy extends Ship {
 
 	@Override
 	public void CollisionCheck() {		
+	}
+
+	public Rectangle2D getHitbox() {
+		
+		return enemyHitbox;
+	}
+
+	public void takeDamage() {
+    this.ship = images.get(1);	
+    this.dead = true;
+     
 	}
 
 }

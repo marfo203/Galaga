@@ -37,8 +37,7 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage gameStage) throws Exception {
-		int x = 0;	
+	public void start(Stage gameStage) throws Exception {	
 		gameStage.setTitle("TotallyAwesomeGame, sort of");
 		gameStage.setWidth(600);
 		gameStage.setHeight(700);
