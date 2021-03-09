@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 
 public class Enemy extends Ship {
 
-	private int speed = 5; // Constant speed. Maybe shange depending on score
+	private int speed = 3; // Constant speed. Maybe shange depending on score
 	private boolean dead = false;
 	private double posX = 0;
 	private double posY = 0;
@@ -42,7 +42,11 @@ public class Enemy extends Ship {
 		}
 	}
 	public void enemyMovement() {
+
 		posX += 1;
+
+		posX += speed;
+
 	}
 
 //	public Bullet Shoot(GraphicsContext gc) {
