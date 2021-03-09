@@ -1,6 +1,7 @@
 package states;
 
 import testing.Tester;
+import main.Comet;
 import main.Enemy;
 import main.Player;
 
@@ -52,12 +53,14 @@ public class PlayState extends GameState {
 	private Image ship;
 	private Image deadship;
 	private Image TieFighter;
+	private Image Comet;
 
 	private Enemy enemy;
 	private GraphicsContext gc;
 
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<Comet> comets = new ArrayList<Comet>();
 
 	public PlayState(GameModel model, GraphicsContext gc) {
 		super(model);
@@ -70,6 +73,7 @@ public class PlayState extends GameState {
 			ship = new Image(new FileInputStream("ship.png"));
 			deadship = new Image(new FileInputStream("explosion.png"));
 			TieFighter = new Image(new FileInputStream("TieFighter.png"));
+			Comet = new Image(new FileInputStream("Comet.png"));
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
@@ -77,11 +81,34 @@ public class PlayState extends GameState {
 		images.add(ship);
 		images.add(deadship);
 		images.add(TieFighter);
+		images.add(Comet);
 
 		player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
-		for (int i = 0; i < 5; i++) {
-			enemy = new Enemy((SCREEN_WIDTH / 2) + i * 65, SCREEN_HEIGHT - 50, 10, images, gc, this);
-			enemies.add(enemy);
+
+		spawnEnemies();
+		spawnComets();
+
+	}
+
+	private void spawnEnemies() {
+		if (enemies.isEmpty()) {
+			for (int i = 0; i < 5; i++) {
+				enemy = new Enemy((SCREEN_WIDTH / 2) + i * 65, SCREEN_HEIGHT - 50, 10, images, gc, this);
+				enemies.add(enemy);
+			}
+		}
+
+	}
+
+	private void spawnComets() {
+		Random rand = new Random();
+		int upperbound = 600;
+		int enemyShoot = rand.nextInt(upperbound);
+		
+		if (comets.isEmpty()) {
+			Comet comet = new Comet(enemyShoot, 0, 60, images, gc);
+			comets.add(comet);
+
 		}
 
 	}
@@ -109,6 +136,8 @@ public class PlayState extends GameState {
 			enemies.get(i).update();
 		}
 		checkCollision();
+		spawnEnemies();
+		spawnComets();
 
 	}
 
@@ -155,9 +184,9 @@ public class PlayState extends GameState {
 			}
 		}
 		for (int j = 0; j < enemies.size(); j++) {
-			
+
 			for (int i = 0; i < enemies.get(j).getEBullets().size(); i++) {
-				
+
 				if (enemies.get(j).getEBullets().get(i).getBullethitbox().intersects(player.getHitbox())) {
 					enemies.get(j).getEBullets().remove(i);
 					player.CollisionCheck();
