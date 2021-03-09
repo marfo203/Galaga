@@ -18,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * This state represents the Playing State of the Game The main responsibility
@@ -50,27 +51,39 @@ public class PlayState extends GameState {
 	private Player player;
 	private Image ship;
 	private Image deadship;
-	private ArrayList<Image> images = new ArrayList<Image>();
 	private Image TieFighter;
+
 	private Enemy enemy;
+	private GraphicsContext gc;
+
+	private ArrayList<Image> images = new ArrayList<Image>();
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 	public PlayState(GameModel model, GraphicsContext gc) {
 		super(model);
+		this.gc = gc;
+		this.model = model;
 		bgColor = Color.BLACK;
-		fontColor = Color.BLUE;
+		fontColor = Color.WHITE;
 
 		try {
 			ship = new Image(new FileInputStream("ship.png"));
 			deadship = new Image(new FileInputStream("explosion.png"));
 			TieFighter = new Image(new FileInputStream("TieFighter.png"));
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
 		images.add(ship);
 		images.add(deadship);
 		images.add(TieFighter);
+
 		player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
-		enemy = new Enemy(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
+		for (int i = 0; i < 5; i++) {
+			enemy = new Enemy((SCREEN_WIDTH / 2) + i * 65, SCREEN_HEIGHT - 50, 10, images, gc, this);
+			enemies.add(enemy);
+		}
+
 	}
 
 	/**
@@ -81,19 +94,22 @@ public class PlayState extends GameState {
 		drawBg(g, bgColor);
 
 		g.setFill(fontColor);
-		g.setFont(new Font(30)); // Big letters
+		g.setFont(new Font(20)); // Big letters
+		g.fillText("Score: " + player.getPoints() + "\nHealth: " + player.getHealth(), 20, 20);
+
 		// Can also use:
 		// g.setStroke(fontColor);
 		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
 		// This could be a call to all our objects that we want to draw.
 		// Using the tester simply to illustrate how it could work.
-		
-		
+
 		player.update();
-		enemy.update();
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).update();
+		}
 		checkCollision();
-		
+
 	}
 
 	@Override
@@ -114,20 +130,43 @@ public class PlayState extends GameState {
 	public void update() {
 		// Here one would probably instead move the player and any
 		// enemies / moving obstacles currently active.
-		
+
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).Shoot();
+
+		}
+
 	}
 
 	private void checkCollision() {
+
 		for (int i = 0; i < player.getpBullets().size(); i++) {
-			
-			if (player.getpBullets().get(i).getBullethitbox().intersects(enemy.getHitbox())) {
-				
-				enemy.takeDamage();
-				
-				
+			for (int j = 0; j < enemies.size(); j++) {
+
+				if (player.getpBullets().get(i).getBullethitbox().intersects(enemies.get(j).getHitbox())) {
+
+					player.getpBullets().remove(i);
+
+					enemies.get(j).takeDamage(j);
+					player.Points(enemies.get(j));
+					enemies.remove(j);
+
+				}
 			}
 		}
-		
+		for (int j = 0; j < enemies.size(); j++) {
+			
+			for (int i = 0; i < enemies.get(j).getEBullets().size(); i++) {
+				
+				if (enemies.get(j).getEBullets().get(i).getBullethitbox().intersects(player.getHitbox())) {
+					enemies.get(j).getEBullets().remove(i);
+					player.CollisionCheck();
+
+				}
+			}
+
+		}
+
 	}
 
 	/**
@@ -145,6 +184,11 @@ public class PlayState extends GameState {
 	 */
 	@Override
 	public void deactivate() {
+
+	}
+
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
 
 	}
 

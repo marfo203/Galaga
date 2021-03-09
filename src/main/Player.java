@@ -21,6 +21,7 @@ public class Player extends Ship {
 	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
 	private Bullet bullet;
 	private ArrayList<Image> images;
+	private int points = 0;;
 
 	public Player(double posX, double posY, int size, ArrayList<Image> images, GraphicsContext gc) {
 		super(posX, posY, size, images);
@@ -39,6 +40,7 @@ public class Player extends Ship {
 	public void update() {
 		if (!dead) {
 			gc.drawImage((Image) images.get(0), posX, posY - 30, height, width);
+			shipHitbox = new Rectangle2D(posX, posY - 30, height, width);
 			for (int i = 0; i < bullets.size(); i++) {
 				bullets.get(i).update();
 			}
@@ -69,12 +71,8 @@ public class Player extends Ship {
 	}
 
 	public void CollisionCheck() {
-		for (int i = 0; i < bullets.size(); i++) {
-			if (shipHitbox.intersects(bullets.get(i).getBullethitbox())) {
-				health -= 1;
-			}
 
-		}
+		health -= 1;
 
 	}
 
@@ -84,13 +82,35 @@ public class Player extends Ship {
 		}
 	}
 
-	public Rectangle2D  getHitbox() {
-		
+	public Rectangle2D getHitbox() {
+
 		return shipHitbox;
 	}
 
 	public ArrayList<Bullet> getpBullets() {
 		// TODO Auto-generated method stub
 		return bullets;
+	}
+
+	public void Points(Ship ship) {
+		if (ship instanceof Enemy) {
+			addPoints(50);
+		} else {
+			addPoints(10);
+		}
+
+	}
+
+	private void addPoints(int i) {
+		this.points += i;
+
+	}
+
+	public int getPoints() {
+		return this.points;
+	}
+
+	public int getHealth() {
+		return this.health;
 	}
 }

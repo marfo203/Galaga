@@ -1,11 +1,15 @@
 package states;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * This class represents a state of the game. These states are different views
@@ -31,6 +35,7 @@ import static constants.Constants.SCREEN_WIDTH;
 public abstract class GameState {
 
 	protected GameModel model;
+	private Image stars;
 
 	public GameState(GameModel model) {
 		this.model = model;
@@ -59,11 +64,14 @@ public abstract class GameState {
 	 *              background therefore it is moved to the super class. Having this
 	 *              function in the super class instead of each state removes
 	 *              redundancy.
+	 * @throws FileNotFoundException 
 	 */
 	public void drawBg(GraphicsContext g, Color color) {
 		// Here we can draw a background if we so desire.
+		
 		g.setFill(color);
 		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
 
 	}
 
