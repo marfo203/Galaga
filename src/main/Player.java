@@ -21,8 +21,9 @@ public class Player extends Ship {
 	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
 	private int points = 0;
 	private Image ship;
+	private Image explosion;
 
-	public Player(double posX, double posY, int speed, Image ship, GraphicsContext gc) {
+	public Player(double posX, double posY, int speed, Image ship, GraphicsContext gc, Image explosion) {
 		super(posX, posY, speed, ship, gc);
 
 		this.posX = posX;
@@ -30,6 +31,7 @@ public class Player extends Ship {
 		this.gc = gc;
 		this.ship = ship;
 		this.shipspeed = speed;
+		this.explosion = explosion;
 	}
 
 	public void Shoot() {
@@ -45,7 +47,10 @@ public class Player extends Ship {
 				bullets.get(i).update();
 			}
 		} else if (dead) {
-			gc.drawImage(ship, posX, posY - 30, height, width);
+			gc.drawImage(explosion, posX, posY - 30, height, width);
+			for (int i = 0; i < bullets.size(); i++) {
+				bullets.get(i).update();
+			}
 		}
 	}
 

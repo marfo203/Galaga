@@ -27,6 +27,7 @@ public class ChooseShipState extends GameState {
 	private double height = 175;
 	private double width = 135;
 	private int angle = 0;
+	private Image explosion;
 
 	public ChooseShipState(GameModel model, GraphicsContext gc) {
 		super(model);
@@ -34,6 +35,7 @@ public class ChooseShipState extends GameState {
 		try {
 			mfalcon = new Image(new FileInputStream("ship.png"));
 			xwing = new Image(new FileInputStream("X-wing.png"));
+			explosion = new Image(new FileInputStream("explosion.gif"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -74,12 +76,12 @@ public class ChooseShipState extends GameState {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
 
 		if (key.getCode() == KeyCode.X) {
-			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 30, xwing, gc);
+			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 30, xwing, gc, explosion);
 			PlayState playstate = new PlayState(model, gc, player);
 			model.switchState(playstate);
 		} else if (key.getCode() == KeyCode.M) {
 			model.switchState(new PlayState(model, gc, player));
-			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 15, mfalcon, gc);
+			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 15, mfalcon, gc, explosion);
 			PlayState playstate = new PlayState(model, gc, player);
 			model.switchState(playstate);
 		} else if (key.getCode() == KeyCode.ESCAPE) {

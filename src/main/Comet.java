@@ -17,8 +17,9 @@ public class Comet extends Ship {
 	private GraphicsContext gc;
 	private Image image;
 	private PlayState play;
+	private int size;
 
-	public Comet(int posX, int posY, int size, Image image, GraphicsContext gc, PlayState play) {
+	public Comet(int posX, int posY, int size, Image image, GraphicsContext gc, PlayState play, int speed) {
 		super(posX, posY, size, image, gc);
 
 		this.posX = posX;
@@ -28,13 +29,14 @@ public class Comet extends Ship {
 		this.dead = dead;
 		this.gc = gc;
 		this.play = play;
+		this.size = size;
 
 	}
 
 	public void update() {
 		if (!dead) {
-			gc.drawImage(image, posX - 300, posY - 650, height, width);
-			cometHitbox = new Rectangle2D(posX - 300, posY - 650, height, width);
+			gc.drawImage(image, posX - 300, posY - 650, height*(size/2), width*(size/2));
+			cometHitbox = new Rectangle2D(posX - 300, posY - 650, height*(size/2), width*(size/2));
 			posY += speed;
 		}
 		for (int i = 0; i < play.getComets().size(); i++) {
