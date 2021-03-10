@@ -19,7 +19,6 @@ public class Player extends Ship {
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private int shipspeed = 20;
 	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
-	private ArrayList<Image> images;
 	private int points = 0;
 	private Image ship;
 

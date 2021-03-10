@@ -11,14 +11,22 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.transform.Rotate;
 import main.Player;
 
 public class ChooseShipState extends GameState {
 
 	private Color bgColor = Color.BLACK;
+	private Color fontColor = Color.WHITE;
 	private Image xwing;
 	private Image mfalcon;
 	private Player player;
+	private String informationText = "Press M for Millenium Falcon\nPress X for X-Wing";
+	private double height = 175;
+	private double width = 135;
+	private int angle = 0;
 
 	public ChooseShipState(GameModel model, GraphicsContext gc) {
 		super(model);
@@ -34,14 +42,32 @@ public class ChooseShipState extends GameState {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		angle  += 1;
 		
 	}
+	
+    private void rotate(GraphicsContext gc, double angle, double px, double py) {
+        Rotate r = new Rotate(angle, px, py);
+        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+    }
 
 	@Override
 	public void draw(GraphicsContext g) {
 		drawBg(g, bgColor);
 		
+		g.setFill(fontColor );
+		g.setFont(new Font(30));
+		g.fillText(informationText , SCREEN_WIDTH / 2-180, SCREEN_HEIGHT / 2 - 50);
+		drawRotatedImage(g, mfalcon, angle, SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 + 100);
+		drawRotatedImage(g, xwing, angle, SCREEN_WIDTH / 2 + 80, SCREEN_HEIGHT / 2 + 100);
 	}
+	
+    private void drawRotatedImage(GraphicsContext g, Image image, double angle, double topLeftX, double topLeftY) {
+    	g.save(); // saves the current state on stack, including the current transform
+        rotate(g, angle, topLeftX + width / 2, topLeftY + height / 2);
+        g.drawImage(image, topLeftX, topLeftY, width, height);
+        g.restore(); // back to original state (before rotation)
+    }
 
 	@Override
 	public void keyPressed(KeyEvent key, GraphicsContext gc) {

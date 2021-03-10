@@ -10,13 +10,12 @@ import states.PlayState;
 
 public class Enemy extends Ship {
 
-	private int speed = 1; // Constant speed. Maybe shange depending on score
+	private int speed = 1; // Constant speed. Maybe change depending on score
 	private boolean dead;
 	private double posX = 0;
 	private double posY = 0;
 	private int height = 50;
 	private int width = 65;
-	private ArrayList<Image> images;
 	private GraphicsContext gc;
 
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -40,7 +39,6 @@ public class Enemy extends Ship {
 	public void Shoot() {
 		Random rand = new Random();
 		int upperbound = difficulty;
-
 		int enemyShoot = rand.nextInt(upperbound);
 		if (enemyShoot % difficulty == 0) {
 			Bullet bullet = new Bullet(this.posX - 270, this.posY - 640, 1, gc);
@@ -56,9 +54,6 @@ public class Enemy extends Ship {
 				bullets.get(j).update();
 			}
 			enemyMovement();
-//		} else if (dead) {
-//			gc.drawImage(images.get(4), posX - 300, posY - 650, width, height);
-//		}
 		}
 	}
 
