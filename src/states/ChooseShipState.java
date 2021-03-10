@@ -31,7 +31,7 @@ public class ChooseShipState extends GameState {
 
 	public ChooseShipState(GameModel model, GraphicsContext gc) {
 		super(model);
-				
+
 		try {
 			mfalcon = new Image(new FileInputStream("ship.png"));
 			xwing = new Image(new FileInputStream("X-wing.png"));
@@ -44,61 +44,61 @@ public class ChooseShipState extends GameState {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		angle  += 1;
-		
+		angle += 1;
+
 	}
-	
-    private void rotate(GraphicsContext gc, double angle, double px, double py) {
-        Rotate r = new Rotate(angle, px, py);
-        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
-    }
+
+	private void rotate(GraphicsContext gc, double angle, double px, double py) {
+		Rotate r = new Rotate(angle, px, py);
+		gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+	}
 
 	@Override
 	public void draw(GraphicsContext g) {
 		drawBg(g, bgColor);
-		
-		g.setFill(fontColor );
+
+		g.setFill(fontColor);
 		g.setFont(new Font(30));
-		g.fillText(informationText , SCREEN_WIDTH / 2-180, SCREEN_HEIGHT / 2 - 50);
+		g.fillText(informationText, SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT / 2 - 50);
 		drawRotatedImage(g, mfalcon, angle, SCREEN_WIDTH / 2 - 220, SCREEN_HEIGHT / 2 + 100);
 		drawRotatedImage(g, xwing, angle, SCREEN_WIDTH / 2 + 80, SCREEN_HEIGHT / 2 + 100);
 	}
-	
-    private void drawRotatedImage(GraphicsContext g, Image image, double angle, double topLeftX, double topLeftY) {
-    	g.save(); // saves the current state on stack, including the current transform
-        rotate(g, angle, topLeftX + width / 2, topLeftY + height / 2);
-        g.drawImage(image, topLeftX, topLeftY, width, height);
-        g.restore(); // back to original state (before rotation)
-    }
+
+	private void drawRotatedImage(GraphicsContext g, Image image, double angle, double topLeftX, double topLeftY) {
+		g.save(); // saves the current state on stack, including the current transform
+		rotate(g, angle, topLeftX + width / 2, topLeftY + height / 2);
+		g.drawImage(image, topLeftX, topLeftY, width, height);
+		g.restore(); // back to original state (before rotation)
+	}
 
 	@Override
 	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
 
 		if (key.getCode() == KeyCode.X) {
-			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 30, xwing, gc, explosion);
+			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 30, xwing, gc, explosion, model);
 			PlayState playstate = new PlayState(model, gc, player);
 			model.switchState(playstate);
 		} else if (key.getCode() == KeyCode.M) {
 			model.switchState(new PlayState(model, gc, player));
-			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 15, mfalcon, gc, explosion);
+			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 15, mfalcon, gc, explosion, model);
 			PlayState playstate = new PlayState(model, gc, player);
 			model.switchState(playstate);
 		} else if (key.getCode() == KeyCode.ESCAPE) {
 			model.switchState(new MenuState(model));
-	}
+		}
 	}
 
 	@Override
 	public void activate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deactivate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

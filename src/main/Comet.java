@@ -13,7 +13,7 @@ public class Comet extends Ship {
 	private int width = 50;
 	private int posX;
 	private int posY;
-	Rectangle2D cometHitbox;
+	private Rectangle2D cometHitbox;
 	private GraphicsContext gc;
 	private Image image;
 	private PlayState play;
@@ -53,6 +53,11 @@ public class Comet extends Ship {
 
 	public Rectangle2D getHitbox() {
 		return cometHitbox;
+	}
+
+	public int getHealth() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
