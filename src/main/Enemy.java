@@ -20,8 +20,6 @@ public class Enemy extends Ship {
 
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	public Rectangle2D enemyHitbox;
-	private PlayState play;
-	private int i;
 	private int difficulty = 100; // Lower number, more difficult
 	private Image ship;
 	private int shipIndex;
@@ -32,7 +30,6 @@ public class Enemy extends Ship {
 		this.posY = posY;
 		this.ship = ship;
 		this.gc = gc;
-		this.play = play;
 
 	}
 

@@ -2,7 +2,6 @@ package main;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Bullet {
@@ -11,8 +10,6 @@ public class Bullet {
 	private boolean hitTarget = false;
 	private double posX;
 	private double posY;
-	private int size;
-	private Image bullet;
 	private int direction;
 	private int height = 20;
 	private int width = 2;
@@ -22,10 +19,6 @@ public class Bullet {
 
 		this.posX = posX;
 		this.posY = posY;
-		this.size = size;
-		this.bullet = bullet;
-		this.speed = speed;
-		this.hitTarget = hitTarget;
 		this.direction = direction; // Direction is -1 if player is shooting, +1 if enemy is shooting
 		this.gc = gc;
 	}

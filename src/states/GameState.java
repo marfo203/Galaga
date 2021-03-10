@@ -1,14 +1,12 @@
 package states;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
