@@ -95,29 +95,32 @@ public class PlayState extends GameState {
 		int upperbound = 20;
 		int enemyamount = rand.nextInt(upperbound);
 
-		if (enemies.isEmpty()) {
-			for (int i = 0; i < enemyamount; i++) {
+		if (enemies.size() <= 2) {
+			//for (int i = 0; i < enemyamount; i++) {
 				Random rand1 = new Random();
 				int upperbound1 = 5;
 				int spawnlocation = rand1.nextInt(upperbound1);
 				
-				enemy = new Enemy((SCREEN_WIDTH / 2 - 325) + spawnlocation * 65, SCREEN_HEIGHT - 50 + spawnlocation * 65, 10, tieFighter, gc, this);
+				enemy = new Enemy((SCREEN_WIDTH / 2 - 325) + spawnlocation * 65, SCREEN_HEIGHT - 50 + spawnlocation * 65, spawnlocation, tieFighter, gc, this);
 				enemies.add(enemy);
 			}
 		}
-	}
+	
 
 	public void spawnComets() {
 		Random rand = new Random();
 		int upperbound = 8;
-		int cometamount = rand.nextInt(upperbound);
-		if (comets.size() <= 2) {
-			for (int i = 0; i < cometamount; i++) {	
-				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, cometimage, gc, this);
-				comets.add(comet);				
+		int lowerbound = 1;
+		int cometamount = rand.nextInt(upperbound)+ lowerbound;
+		int speed = rand.nextInt(5) + 1;
+		if (comets.size() <= 3) {
+			//for (int i = 0; i < cometamount; i++) {	
+				comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, cometimage, gc, this, speed);
+				comets.add(comet);	
+				// cometamount = rand.nextInt(upperbound);
 			}
 		}
-	}
+	//}
 
 	/**
 	 * Draws information text to the screen.
@@ -200,6 +203,13 @@ public class PlayState extends GameState {
 				
 		}
 		}
+		}
+		for (int j = 0; j < comets.size(); j++) {
+			if (player.getHitbox().intersects(comets.get(j).getHitbox())) {
+				player.CollisionCheck();
+				comets.remove(j);
+				
+			}
 		}
 	}
 
