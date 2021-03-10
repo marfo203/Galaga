@@ -35,7 +35,6 @@ import java.io.FileNotFoundException;
 public abstract class GameState {
 
 	protected GameModel model;
-	private Image stars;
 
 	public GameState(GameModel model) {
 		this.model = model;

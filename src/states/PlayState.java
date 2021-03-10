@@ -43,24 +43,26 @@ public class PlayState extends GameState {
 	 * can be made. The same variables also exist in the MenuState, can you think of
 	 * a way to make this more general and not duplicate variables?
 	 */
-	private String informationText;
 	private Color bgColor;
 	private Color fontColor;
 
-	/* Class only used for testing */
-//	private Tester tester;
 	private Player player;
+	private Enemy enemy;
+	private Comet comet;
+
 	private Image ship;
 	private Image deadship;
-	private Image TieFighter;
+	private Image tieFighter;
 	private Image Comet;
+	private Image explosion;
 
-	private Enemy enemy;
 	private GraphicsContext gc;
+	
 
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
+
 
 	public PlayState(GameModel model, GraphicsContext gc) {
 		super(model);
@@ -72,16 +74,18 @@ public class PlayState extends GameState {
 		try {
 			ship = new Image(new FileInputStream("ship.png"));
 			deadship = new Image(new FileInputStream("explosion.png"));
-			TieFighter = new Image(new FileInputStream("TieFighter.png"));
+			tieFighter = new Image(new FileInputStream("TieFighter.png"));
 			Comet = new Image(new FileInputStream("Comet.png"));
+			explosion = new Image(new FileInputStream("explosion.gif"));
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
 		images.add(ship);
 		images.add(deadship);
-		images.add(TieFighter);
+		images.add(tieFighter);
 		images.add(Comet);
+		images.add(explosion);
 
 		player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
 
@@ -89,28 +93,42 @@ public class PlayState extends GameState {
 		spawnComets();
 
 	}
+	
+	public static void SetChoosenShip(Image ship) {
+		ship = ship;
+	}
+	
+	public Image GetChoosenShip() {
+		return ship;
+	}
 
-	private void spawnEnemies() {
+	public void spawnEnemies() {
+		Random rand = new Random();
+		int upperbound = 20;
+		int enemyamount = rand.nextInt(upperbound);
+
 		if (enemies.isEmpty()) {
-			for (int i = 0; i < 5; i++) {
-				enemy = new Enemy((SCREEN_WIDTH / 2) + i * 65, SCREEN_HEIGHT - 50, 10, images, gc, this);
+			for (int i = 0; i < enemyamount; i++) {
+				Random rand1 = new Random();
+				int upperbound1 = 5;
+				int spawnlocation = rand1.nextInt(upperbound1);
+				
+				enemy = new Enemy((SCREEN_WIDTH / 2 - 325) + spawnlocation * 65, SCREEN_HEIGHT - 50 + spawnlocation * 65, 10, images, gc, this);
 				enemies.add(enemy);
 			}
 		}
-
 	}
 
-	private void spawnComets() {
+	public void spawnComets() {
 		Random rand = new Random();
-		int upperbound = 600;
-		int enemyShoot = rand.nextInt(upperbound);
-		
+		int upperbound = 8;
+		int cometamount = rand.nextInt(upperbound);
 		if (comets.isEmpty()) {
-			Comet comet = new Comet(enemyShoot, 0, 60, images, gc);
-			comets.add(comet);
-
+			for (int i = 0; i < cometamount; i++) {	
+				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, images, gc);
+				comets.add(comet);				
+			}
 		}
-
 	}
 
 	/**
@@ -135,10 +153,12 @@ public class PlayState extends GameState {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
+		for (int i = 0; i < comets.size(); i++) {
+			comets.get(i).update();
+		}
 		checkCollision();
 		spawnEnemies();
 		spawnComets();
-
 	}
 
 	@Override
@@ -152,7 +172,6 @@ public class PlayState extends GameState {
 		if (key.getCode() == KeyCode.SPACE) {
 			player.Shoot();
 		}
-
 	}
 
 	@Override
@@ -162,9 +181,7 @@ public class PlayState extends GameState {
 
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).Shoot();
-
 		}
-
 	}
 
 	private void checkCollision() {
@@ -173,29 +190,21 @@ public class PlayState extends GameState {
 			for (int j = 0; j < enemies.size(); j++) {
 
 				if (player.getpBullets().get(i).getBullethitbox().intersects(enemies.get(j).getHitbox())) {
-
 					player.getpBullets().remove(i);
-
 					enemies.get(j).takeDamage(j);
 					player.Points(enemies.get(j));
 					enemies.remove(j);
-
 				}
 			}
 		}
 		for (int j = 0; j < enemies.size(); j++) {
-
 			for (int i = 0; i < enemies.get(j).getEBullets().size(); i++) {
-
 				if (enemies.get(j).getEBullets().get(i).getBullethitbox().intersects(player.getHitbox())) {
 					enemies.get(j).getEBullets().remove(i);
 					player.CollisionCheck();
-
 				}
 			}
-
 		}
-
 	}
 
 	/**
@@ -204,7 +213,6 @@ public class PlayState extends GameState {
 	 */
 	@Override
 	public void activate() {
-
 	}
 
 	/**
@@ -213,12 +221,10 @@ public class PlayState extends GameState {
 	 */
 	@Override
 	public void deactivate() {
-
 	}
 
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
-
 	}
-
+	
 }

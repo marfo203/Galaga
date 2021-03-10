@@ -8,24 +8,22 @@ import javafx.scene.image.Image;
 
 public class Comet extends Ship {
 
-	private int speed = 5; // Constant speed. Maybe shange depending on score
-	private boolean dead = false;
+	private int speed = 2; // Constant speed. Maybe shange depending on score
+	private boolean dead;
 	private int height = 50;
 	private int width = 50;
 	private int posX;
 	private int posY;
-	private int size;
 	Rectangle2D cometHitbox;
-	private ArrayList<Image> comet;
+	private ArrayList<Image> images;
 	private GraphicsContext gc;
 
-	public Comet(int posX, int posY, int size, ArrayList<Image> comet, GraphicsContext gc) {
-		super(posX, posY, size, comet);
+	public Comet(int posX, int posY, int size, ArrayList<Image> images, GraphicsContext gc) {
+		super(posX, posY, size, images);
 
 		this.posX = posX;
 		this.posY = posY;
-		this.size = size;
-		this.comet = comet;
+		this.images = images;
 		this.speed = speed;
 		this.dead = dead;
 		this.gc = gc;
@@ -33,12 +31,10 @@ public class Comet extends Ship {
 	}
 
 	public void update() {
-		if (!dead) {
-			
-			gc.drawImage(comet.get(4), posX, posY, size, size);
-			cometHitbox = new Rectangle2D(posX, posY, size, size);
-			posX += speed;
-			
+		if (!dead) {			
+			gc.drawImage(images.get(3), posX - 300, posY - 650, height, width);
+			cometHitbox = new Rectangle2D(posX - 300, posY - 650, height, width);
+			posY += speed;		
 		}
 	}
 

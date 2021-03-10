@@ -14,8 +14,8 @@ public class Bullet {
 	private int size;
 	private Image bullet;
 	private int direction;
-	private int height = 10;
-	private int width = 10;
+	private int height = 20;
+	private int width = 2;
 	private Rectangle2D bulletHitbox;
 
 	public Bullet(double posX, double posY, int direction, GraphicsContext gc) {
@@ -33,27 +33,16 @@ public class Bullet {
 	public void update() {
 		if (!hitTarget) {
 			this.posY += speed * direction;
-			bulletHitbox = new Rectangle2D(posX, posY, height, width);
+			bulletHitbox = new Rectangle2D(posX, posY, width, height);
 			if (this.direction == -1) {
-				gc.setFill(Color.LIMEGREEN); // Här kan vi ju använda bilder på något som skott istället men najs om man
-												// ser tydligt "goda" och "onda" skott.
+				gc.setFill(Color.LIMEGREEN); // Här kan vi ju använda bilder på något som skott istället men najs om man												// ser tydligt "goda" och "onda" skott.
 			} else {
 				gc.setFill(Color.RED);
 			}
-			gc.fillOval(this.posX, this.posY, height, width);
+			gc.fillOval(this.posX, this.posY, width, height);
 		}
 	}
-
-	public void CreateBullet() {
-		if (this.direction == -1) {
-			gc.setFill(Color.LIMEGREEN); // Här kan vi ju använda bilder på något som skott istället men najs om man ser
-											// tydligt "goda" och "onda" skott.
-		} else {
-			gc.setFill(Color.RED);
-		}
-		gc.fillOval(this.posX, this.posY, 10, 10);
-	}
-
+	
 	public Rectangle2D getBullethitbox() {
 		return bulletHitbox;
 	}

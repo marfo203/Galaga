@@ -19,7 +19,6 @@ public class Player extends Ship {
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private int shipspeed = 20;
 	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
-	private Bullet bullet;
 	private ArrayList<Image> images;
 	private int points = 0;;
 
@@ -39,13 +38,13 @@ public class Player extends Ship {
 
 	public void update() {
 		if (!dead) {
-			gc.drawImage((Image) images.get(0), posX, posY - 30, height, width);
+			gc.drawImage(images.get(0), posX, posY - 30, height, width);
 			shipHitbox = new Rectangle2D(posX, posY - 30, height, width);
 			for (int i = 0; i < bullets.size(); i++) {
 				bullets.get(i).update();
 			}
-		} else {
-			gc.drawImage((Image) images.get(1), posX, posY - 30, height, width);
+		} else if (dead) {
+			gc.drawImage(images.get(4), posX, posY - 30, height, width);
 		}
 	}
 
@@ -61,7 +60,6 @@ public class Player extends Ship {
 	}
 
 	private void checkBoundaries() {
-
 		if (posX < 0) {
 			posX = 0;
 		}
@@ -71,19 +69,13 @@ public class Player extends Ship {
 	}
 
 	public void CollisionCheck() {
-
 		health -= 1;
-
-	}
-
-	public void IsDead() {
 		if (health == 0) {
 			dead = true;
 		}
 	}
 
 	public Rectangle2D getHitbox() {
-
 		return shipHitbox;
 	}
 
@@ -98,7 +90,6 @@ public class Player extends Ship {
 		} else {
 			addPoints(10);
 		}
-
 	}
 
 	private void addPoints(int i) {

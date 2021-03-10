@@ -59,7 +59,7 @@ public class MenuState extends GameState {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
 
 		if (key.getCode() == KeyCode.ENTER) {
-			model.switchState(new PlayState(model, gc));
+			model.switchState(new ChooseShipState(model, gc));
 		} else if (key.getCode() == KeyCode.ESCAPE) {
 			System.exit(0);
 		} else if (key.getCode() == KeyCode.H) {
