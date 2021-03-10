@@ -1,10 +1,12 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import states.PlayState;
 
 public class Comet extends Ship {
 
@@ -17,8 +19,9 @@ public class Comet extends Ship {
 	Rectangle2D cometHitbox;
 	private ArrayList<Image> images;
 	private GraphicsContext gc;
+	private PlayState play;
 
-	public Comet(int posX, int posY, int size, ArrayList<Image> images, GraphicsContext gc) {
+	public Comet(int posX, int posY, int size, ArrayList<Image> images, GraphicsContext gc, PlayState play) {
 		super(posX, posY, size, images);
 
 		this.posX = posX;
@@ -27,6 +30,7 @@ public class Comet extends Ship {
 		this.speed = speed;
 		this.dead = dead;
 		this.gc = gc;
+		this.play = play;
 
 	}
 
@@ -36,10 +40,20 @@ public class Comet extends Ship {
 			cometHitbox = new Rectangle2D(posX - 300, posY - 650, height, width);
 			posY += speed;		
 		}
+		for (int i = 0; i < play.getComets().size(); i++) {
+			if (play.getComets().get(i).posY >= 1500) {
+				play.getComets().remove(i);
+			}
+		}
+		
 	}
 
 	@Override
 	public void CollisionCheck() {
+	}
+
+	public Rectangle2D getHitbox() {
+		return cometHitbox;
 	}
 
 }
