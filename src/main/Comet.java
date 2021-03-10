@@ -8,7 +8,6 @@ import states.PlayState;
 
 public class Comet extends Ship {
 
-	private int speed = 2; // Constant speed. Maybe shange depending on score
 	private boolean dead;
 	private int height = 50;
 	private int width = 50;
@@ -20,6 +19,7 @@ public class Comet extends Ship {
 	private PlayState play;
 	private int size;
 	private double angle = 1;
+	private int speed;
 
 	public Comet(int posX, int posY, int size, Image image, GraphicsContext gc, PlayState play, int speed) {
 		super(posX, posY, size, image, gc);
@@ -31,7 +31,7 @@ public class Comet extends Ship {
 		this.gc = gc;
 		this.play = play;
 		this.size = size;
-
+		
 	}
 
 	private void rotate(GraphicsContext gc, double angle, double px, double py) {
@@ -56,7 +56,7 @@ public class Comet extends Ship {
 		gc.save(); // saves the current state on stack, including the current transform
 		rotate(gc, angle, topLeftX + width / 2, topLeftY + height / 2);
 		gc.drawImage(image, topLeftX, topLeftY, height * (size / 2), width * (size / 2));
-		cometHitbox = new Rectangle2D(posX - 300, posY - 650, height * (size / 2), width * (size / 2));
+		cometHitbox = new Rectangle2D(topLeftX, topLeftY, height * (size / 2), width * (size / 2));
 		gc.restore(); // back to original state (before rotation)
 	}
 
@@ -69,7 +69,6 @@ public class Comet extends Ship {
 	}
 
 	public int getHealth() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

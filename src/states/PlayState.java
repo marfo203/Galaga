@@ -49,22 +49,17 @@ public class PlayState extends GameState {
 	private Comet comet;
 	private PowerUp powerUp;
 
-	private Image ship;
-	private Image deadship;
 	private Image tieFighter;
 	private Image cometimage;
-	private Image explosion;
 	private Image gameOver;
 	private Image heart;
 
 	private GraphicsContext gc;
 
-	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
 
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-
 
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
@@ -76,16 +71,12 @@ public class PlayState extends GameState {
 
 		try {
 			tieFighter = new Image(new FileInputStream("TieFighter.png"));
-			cometimage = new Image(new FileInputStream("Comet.png"));
-			explosion = new Image(new FileInputStream("explosion.gif"));
 			gameOver = new Image(new FileInputStream("gameOver.png"));
+			cometimage = new Image(new FileInputStream("Comet.png"));
 			heart = new Image(new FileInputStream("heart.png"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
-		images.add(tieFighter);
-		images.add(cometimage);
-		images.add(explosion);
 
 		spawnEnemies();
 		spawnComets();
@@ -93,24 +84,21 @@ public class PlayState extends GameState {
 
 	}
 
-
 	private void spawnPowerUps() {
 		Random rand = new Random();
 		int upperbound = 8;
 		int lowerbound = 1;
 		int cometamount = rand.nextInt(upperbound) + lowerbound;
 		int speed = rand.nextInt(5) + 1;
-		
-			// for (int i = 0; i < cometamount; i++) {
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, 1, heart, gc,
-					this, speed);
-			comets.add(powerUp);
-			powerUps.add(powerUp);
-			// cometamount = rand.nextInt(upperbound);
-		
+
+		// for (int i = 0; i < cometamount; i++) {
+		powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, 1, heart, gc, this,
+				speed);
+		comets.add(powerUp);
+		powerUps.add(powerUp);
+		// cometamount = rand.nextInt(upperbound);
 
 	}
-
 
 	public void StartGame() {
 	}
@@ -140,18 +128,11 @@ public class PlayState extends GameState {
 		int speed = rand.nextInt(5) + 1;
 		int size = rand.nextInt(5) + 1;
 		if (comets.size() <= 3) {
-			// for (int i = 0; i < cometamount; i++) {
-
-			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), size, cometimage, gc, this,
-
 			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, cometimage, gc, this,
-
 					speed);
 			comets.add(comet);
-			// cometamount = rand.nextInt(upperbound);
 		}
 	}
-	// }
 
 	/**
 	 * Draws information text to the screen.
@@ -182,11 +163,12 @@ public class PlayState extends GameState {
 		spawnEnemies();
 		spawnComets();
 		if (player.getDead()) {
-			gc.drawImage(gameOver, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3);
+			g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
+//			model.switchState(new GameOverState(model, g));
 			g.setFill(Color.WHITE);
 			g.setFont(new Font(30)); // Big letters
 			// Print the information text, centered on the canvas
-			g.fillText("Press ENTER to play again\nPress H to view Highscore", SCREEN_WIDTH / 4, SCREEN_HEIGHT / 1.5);
+			g.fillText("Your Score: " + player.getPoints() + "\nPress ENTER to continue", SCREEN_WIDTH / 4 - 40, SCREEN_HEIGHT / 1.5);
 		}
 	}
 
@@ -205,10 +187,7 @@ public class PlayState extends GameState {
 			}
 		} else {
 			if (key.getCode() == KeyCode.ENTER) {
-				model.switchState(new ChooseShipState(model, gc));
-
-			} else if (key.getCode() == KeyCode.H) {
-				model.switchState(new HighScoreState(model));
+				model.switchState(new GameOverState(model, gc, player));
 			}
 		}
 	}
@@ -253,7 +232,6 @@ public class PlayState extends GameState {
 					player.getpBullets().remove(i);
 					player.Points(comets.get(j));
 
-
 				}
 			}
 		}
@@ -261,8 +239,8 @@ public class PlayState extends GameState {
 			if (player.getHitbox().intersects(comets.get(j).getHitbox())) {
 				if (comets.get(j) instanceof PowerUp) {
 					player.addHealth(comets.get(j).getHealth());
-				}else {
-				player.CollisionCheck();
+				} else {
+					player.CollisionCheck();
 				}
 				comets.remove(j);
 
