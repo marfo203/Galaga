@@ -22,15 +22,16 @@ public class Enemy extends Ship {
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	public Rectangle2D enemyHitbox;
 	private PlayState play;
-	private int shipIndex;
 	private int i;
 	private int difficulty = 100; // Lower number, more difficult
+	private Image ship;
+	private int shipIndex;
 
-	public Enemy(double posX, double posY, int size, ArrayList<Image> images, GraphicsContext gc, PlayState play) {
-		super(posX, posY, size, images);
+	public Enemy(double posX, double posY, int size, Image ship, GraphicsContext gc, PlayState play) {
+		super(posX, posY, size, ship);
 		this.posX = posX;
 		this.posY = posY;
-		this.images = images;
+		this.ship = ship;
 		this.gc = gc;
 		this.play = play;
 
@@ -42,21 +43,22 @@ public class Enemy extends Ship {
 
 		int enemyShoot = rand.nextInt(upperbound);
 		if (enemyShoot % difficulty == 0) {
-			Bullet bullet = new Bullet(this.posX - 270, this.posY - 650, 1, gc);
+			Bullet bullet = new Bullet(this.posX - 270, this.posY - 640, 1, gc);
 			bullets.add(bullet);
 		}
 	}
 
 	public void update() {
 		if (!dead) {
-			gc.drawImage(images.get(2), posX - 300, posY - 650, width, height);
+			gc.drawImage(ship, posX - 300, posY - 650, width, height);
 			enemyHitbox = new Rectangle2D(posX - 300, posY - 650, height, width);
 			for (int j = 0; j < bullets.size(); j++) {
 				bullets.get(j).update();
 			}
 			enemyMovement();
-		} else if (dead) {
-			gc.drawImage(images.get(4), posX - 300, posY - 650, width, height);
+//		} else if (dead) {
+//			gc.drawImage(images.get(4), posX - 300, posY - 650, width, height);
+//		}
 		}
 	}
 

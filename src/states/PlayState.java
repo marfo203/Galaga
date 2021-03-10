@@ -1,6 +1,5 @@
 package states;
 
-import testing.Tester;
 import main.Comet;
 import main.Enemy;
 import main.Player;
@@ -18,7 +17,6 @@ import static constants.Constants.SCREEN_WIDTH;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -53,53 +51,42 @@ public class PlayState extends GameState {
 	private Image ship;
 	private Image deadship;
 	private Image tieFighter;
-	private Image Comet;
+	private Image cometimage;
 	private Image explosion;
 
-	private GraphicsContext gc;
-	
+	private GraphicsContext gc;	
 
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
 
 
-	public PlayState(GameModel model, GraphicsContext gc) {
+	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
 		this.gc = gc;
 		this.model = model;
+		this.player = player;
 		bgColor = Color.BLACK;
 		fontColor = Color.WHITE;
 
 		try {
-			ship = new Image(new FileInputStream("ship.png"));
-			deadship = new Image(new FileInputStream("explosion.png"));
 			tieFighter = new Image(new FileInputStream("TieFighter.png"));
-			Comet = new Image(new FileInputStream("Comet.png"));
+			cometimage = new Image(new FileInputStream("Comet.png"));
 			explosion = new Image(new FileInputStream("explosion.gif"));
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
-		images.add(ship);
-		images.add(deadship);
 		images.add(tieFighter);
-		images.add(Comet);
+		images.add(cometimage);
 		images.add(explosion);
-
-		player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 10, images, gc);
-
+		
 		spawnEnemies();
 		spawnComets();
 
 	}
 	
-	public static void SetChoosenShip(Image ship) {
-		ship = ship;
-	}
-	
-	public Image GetChoosenShip() {
-		return ship;
+	public void StartGame() {
 	}
 
 	public void spawnEnemies() {
@@ -113,7 +100,7 @@ public class PlayState extends GameState {
 				int upperbound1 = 5;
 				int spawnlocation = rand1.nextInt(upperbound1);
 				
-				enemy = new Enemy((SCREEN_WIDTH / 2 - 325) + spawnlocation * 65, SCREEN_HEIGHT - 50 + spawnlocation * 65, 10, images, gc, this);
+				enemy = new Enemy((SCREEN_WIDTH / 2 - 325) + spawnlocation * 65, SCREEN_HEIGHT - 50 + spawnlocation * 65, 10, tieFighter, gc, this);
 				enemies.add(enemy);
 			}
 		}
@@ -125,7 +112,7 @@ public class PlayState extends GameState {
 		int cometamount = rand.nextInt(upperbound);
 		if (comets.isEmpty()) {
 			for (int i = 0; i < cometamount; i++) {	
-				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, images, gc);
+				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, cometimage, gc);
 				comets.add(comet);				
 			}
 		}
