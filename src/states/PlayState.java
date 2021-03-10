@@ -62,7 +62,9 @@ public class PlayState extends GameState {
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
+
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+
 
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
@@ -91,6 +93,7 @@ public class PlayState extends GameState {
 
 	}
 
+
 	private void spawnPowerUps() {
 		Random rand = new Random();
 		int upperbound = 8;
@@ -107,6 +110,7 @@ public class PlayState extends GameState {
 		
 
 	}
+
 
 	public void StartGame() {
 	}
@@ -137,7 +141,11 @@ public class PlayState extends GameState {
 		int size = rand.nextInt(5) + 1;
 		if (comets.size() <= 3) {
 			// for (int i = 0; i < cometamount; i++) {
+
 			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), size, cometimage, gc, this,
+
+			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, cometimage, gc, this,
+
 					speed);
 			comets.add(comet);
 			// cometamount = rand.nextInt(upperbound);
@@ -241,8 +249,10 @@ public class PlayState extends GameState {
 			for (int i = 0; i < player.getpBullets().size(); i++) {
 				if (player.getpBullets().get(i).getBullethitbox().intersects(comets.get(j).getHitbox())) {
 					comets.remove(j);
+
 					player.getpBullets().remove(i);
 					player.Points(comets.get(j));
+
 
 				}
 			}
