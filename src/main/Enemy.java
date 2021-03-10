@@ -28,7 +28,7 @@ public class Enemy extends Ship {
 	private int shipIndex;
 
 	public Enemy(double posX, double posY, int size, Image ship, GraphicsContext gc, PlayState play) {
-		super(posX, posY, size, ship);
+		super(posX, posY, size, ship, gc);
 		this.posX = posX;
 		this.posY = posY;
 		this.ship = ship;

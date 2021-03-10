@@ -24,7 +24,7 @@ public class Player extends Ship {
 	private Image ship;
 
 	public Player(double posX, double posY, int speed, Image ship, GraphicsContext gc) {
-		super(posX, posY, speed, ship);
+		super(posX, posY, speed, ship, gc);
 
 		this.posX = posX;
 		this.posY = posY;

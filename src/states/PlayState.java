@@ -113,9 +113,7 @@ public class PlayState extends GameState {
 		int cometamount = rand.nextInt(upperbound);
 		if (comets.size() <= 2) {
 			for (int i = 0; i < cometamount; i++) {	
-				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, cometimage, gc);
-=======
-				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, images, gc, this);
+				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, cometimage, gc, this);
 				comets.add(comet);				
 			}
 		}
