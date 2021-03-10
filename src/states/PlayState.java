@@ -59,6 +59,7 @@ public class PlayState extends GameState {
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
+	
 
 
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
@@ -110,9 +111,11 @@ public class PlayState extends GameState {
 		Random rand = new Random();
 		int upperbound = 8;
 		int cometamount = rand.nextInt(upperbound);
-		if (comets.isEmpty()) {
+		if (comets.size() <= 2) {
 			for (int i = 0; i < cometamount; i++) {	
 				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, cometimage, gc);
+=======
+				comet = new Comet((SCREEN_WIDTH / 2) + i * 65, (SCREEN_HEIGHT - 50), 60, images, gc, this);
 				comets.add(comet);				
 			}
 		}
@@ -192,6 +195,14 @@ public class PlayState extends GameState {
 				}
 			}
 		}
+		for (int j = 0; j < comets.size(); j++) {
+			for (int i = 0; i < player.getpBullets().size(); i++) {
+			if (player.getpBullets().get(i).getBullethitbox().intersects(comets.get(j).getHitbox())) {
+				comets.remove(j);
+				
+		}
+		}
+		}
 	}
 
 	/**
@@ -213,5 +224,7 @@ public class PlayState extends GameState {
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
-	
+	public ArrayList<Comet> getComets() {
+		return comets;
+	}
 }
