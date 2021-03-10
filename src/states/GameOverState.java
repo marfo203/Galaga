@@ -29,6 +29,8 @@ public class GameOverState extends GameState {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		SaveScore();
 	}
 
 	public void SaveScore() {
@@ -44,11 +46,6 @@ public class GameOverState extends GameState {
 		drawBg(g, color);
 		
 		g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
-		
-		g.setFill(Color.WHITE);
-		g.setFont(new Font(30)); // Big letters
-		// Print the information text, centered on the canvas
-		g.fillText("Enter name: ", SCREEN_WIDTH / 4 - 40, SCREEN_HEIGHT / 1.5);
 	}
 
 	@Override
