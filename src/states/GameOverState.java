@@ -30,10 +30,11 @@ public class GameOverState extends GameState {
 			e.printStackTrace();
 		}
 		
-		SaveScore();
+		SaveName();
 	}
 
-	public void SaveScore() {
+	public void SaveName() {
+		
 		
 	}
 
@@ -42,9 +43,8 @@ public class GameOverState extends GameState {
 	}
 
 	@Override
-	public void draw(GraphicsContext g, GameFrame gameFrame) {
-		drawBg(g, color, gameFrame);
-		
+	public void draw(GraphicsContext g) {
+		drawBg(g, color);		
 		g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
 	}
 

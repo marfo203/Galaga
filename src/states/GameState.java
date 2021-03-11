@@ -14,6 +14,7 @@ import main.GameFrame;
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -40,6 +41,7 @@ import java.io.FileNotFoundException;
 public abstract class GameState {
 
 	protected GameModel model;
+	private Image stars;
 
 	public GameState(GameModel model) {
 		this.model = model;
@@ -47,7 +49,7 @@ public abstract class GameState {
 
 	public abstract void update();
 
-	public abstract void draw(GraphicsContext g, GameFrame gameFrame);
+	public abstract void draw(GraphicsContext g);
 
 	/**
 	 * This function is called for each keyPressed event which occurs on the
@@ -68,20 +70,13 @@ public abstract class GameState {
 	 *              background therefore it is moved to the super class. Having this
 	 *              function in the super class instead of each state removes
 	 *              redundancy.
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
-	public void drawBg(GraphicsContext g, Color color, GameFrame gameFrame) {
+	public void drawBg(GraphicsContext g, Color color) {
 		// Here we can draw a background if we so desire.
-		
-		Image image = new Image("/star.gif");
-		BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
-				BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-		Background bg = new Background(bgImage);
-		gameFrame.setBackground(bg);
-		
-//		g.setFill(color);
-//		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		
+
+		g.setFill(color);
+		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	}
 

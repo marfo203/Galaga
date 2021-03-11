@@ -36,6 +36,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
+
 	@Override
 	public void start(Stage gameStage) throws Exception {	
 		gameStage.setTitle("TotallyAwesomeGame, sort of");

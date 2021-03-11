@@ -34,8 +34,8 @@ public class MenuState extends GameState {
 	 * Draws information text to the screen
 	 */
 	@Override
-	public void draw(GraphicsContext g, GameFrame gameFrame) {
-		drawBg(g, bgColor, gameFrame);
+	public void draw(GraphicsContext g) {
+		drawBg(g, bgColor);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); // Big letters

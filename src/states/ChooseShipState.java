@@ -53,8 +53,8 @@ public class ChooseShipState extends GameState {
 	}
 
 	@Override
-	public void draw(GraphicsContext g, GameFrame gameFrame) {
-		drawBg(g, bgColor, gameFrame);
+	public void draw(GraphicsContext g) {
+		drawBg(g, bgColor);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30));

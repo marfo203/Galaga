@@ -65,7 +65,7 @@ public class GameModel {
 	 *          drawing from the GamePanel to the current state
 	 * @param gameFrame 
 	 */
-	public void draw(GraphicsContext g, GameFrame gameFrame) {
-		currentState.draw(g, gameFrame);
+	public void draw(GraphicsContext g) {
+		currentState.draw(g);
 	}
 }

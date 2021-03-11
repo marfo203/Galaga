@@ -13,12 +13,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -65,8 +72,6 @@ public class PlayState extends GameState {
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
 
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-	private String name;
-	private String c;
 
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
@@ -84,24 +89,10 @@ public class PlayState extends GameState {
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
-		
+
 		spawnEnemies();
 		spawnComets();
 		spawnPowerUps();
-
-	}
-
-	private void spawnPowerUps() {
-		Random rand = new Random();
-		int upperbound = 8;
-		int lowerbound = 1;
-		int cometamount = rand.nextInt(upperbound) + lowerbound;
-		int speed = rand.nextInt(5) + 1;
-
-		powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, 1, heart, gc, this,
-				speed);
-		comets.add(powerUp);
-		powerUps.add(powerUp);
 
 	}
 
@@ -158,8 +149,8 @@ public class PlayState extends GameState {
 	 * Draws information text to the screen.
 	 */
 	@Override
-	public void draw(GraphicsContext g, GameFrame gameFrame) {
-		drawBg(g, bgColor, gameFrame);
+	public void draw(GraphicsContext g) {
+		drawBg(g, bgColor);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(20)); // Big letters
@@ -204,7 +195,6 @@ public class PlayState extends GameState {
 	@Override
 	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getCode() + " i PlayState");
-		System.out.println("hej");
 		if (!player.getDead()) {
 			if (key.getCode() == KeyCode.ESCAPE) {
 				model.switchState(new MenuState(model));
@@ -217,10 +207,23 @@ public class PlayState extends GameState {
 			}
 		} else {
 			if (key.getCode() == KeyCode.ENTER) {
-				model.switchState(new GameOverState(model, gc, player));
+				SaveScoreToFile();
+				model.switchState(new HighScoreState(model));
 			}
 		}
 	}
+
+	private void SaveScoreToFile() {		
+			try {
+				FileWriter output = (new FileWriter("HighScores.txt", true));
+				output.write(player.getPoints() + "\n");
+				output.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	@Override
 	public void update() {
