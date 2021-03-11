@@ -84,7 +84,7 @@ public class PlayState extends GameState {
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
-
+		
 		spawnEnemies();
 		spawnComets();
 		spawnPowerUps();
@@ -126,16 +126,32 @@ public class PlayState extends GameState {
 
 	public void spawnComets() {
 		Random rand = new Random();
-		int upperbound = 8;
-		int lowerbound = 1;
-		int cometamount = rand.nextInt(upperbound) + lowerbound;
+		int cometamount = rand.nextInt(8) + 1;
 		int speed = rand.nextInt(5) + 1;
 		int size = rand.nextInt(5) + 1;
 		if (comets.size() <= 3) {
-			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, cometimage, gc, this,
+
+			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, cometimage, gc, this,
+
 					speed);
 			comets.add(comet);
+
 		}
+	}
+
+	private void spawnPowerUps() {
+
+		Random rand = new Random();
+		int cometamount = rand.nextInt(8) + 1;
+		int speed = rand.nextInt(5) + 1;
+		int size = rand.nextInt(1000) + 1;
+		if (size == 20 && powerUps.isEmpty()) {
+
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, 1, heart, gc,
+					this, speed);
+			powerUps.add(powerUp);
+		}
+
 	}
 
 	/**
@@ -155,34 +171,40 @@ public class PlayState extends GameState {
 
 		// This could be a call to all our objects that we want to draw.
 		// Using the tester simply to illustrate how it could work.
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).Shoot();
+		}
 
 		player.update();
+		System.out.println("Calling player update");
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
 		for (int i = 0; i < comets.size(); i++) {
 			comets.get(i).update();
 		}
+		for (int i = 0; i < powerUps.size(); i++) {
+			powerUps.get(i).update();
+		}
 		checkCollision();
 		spawnEnemies();
 		spawnComets();
+		spawnPowerUps();
 		if (player.getDead()) {
 			g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
 //			model.switchState(new GameOverState(model, g));
 			g.setFill(Color.WHITE);
 			g.setFont(new Font(30)); // Big letters
 			// Print the information text, centered on the canvas
-			g.fillText("Your Score: " + player.getPoints() + "\nEnter your name: ", SCREEN_WIDTH / 4 - 40, SCREEN_HEIGHT / 1.5);
-			TextField tf = new TextField();
-			GridPane root = new GridPane();
-			root.addRow(0, tf);
-			
+			g.fillText("Your Score: " + player.getPoints() + "\nPress ENTER to continue", SCREEN_WIDTH / 4 - 40,
+					SCREEN_HEIGHT / 1.5);
 		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getCode() + " i PlayState");
+		System.out.println("hej");
 		if (!player.getDead()) {
 			if (key.getCode() == KeyCode.ESCAPE) {
 				model.switchState(new MenuState(model));
@@ -204,10 +226,6 @@ public class PlayState extends GameState {
 	public void update() {
 		// Here one would probably instead move the player and any
 		// enemies / moving obstacles currently active.
-
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).Shoot();
-		}
 
 	}
 
@@ -243,14 +261,19 @@ public class PlayState extends GameState {
 				}
 			}
 		}
-		for (int j = 0; j < comets.size(); j++) {
-			if (player.getHitbox().intersects(comets.get(j).getHitbox())) {
-				if (comets.get(j) instanceof PowerUp) {
-					player.addHealth(comets.get(j).getHealth());
-				} else {
-					player.CollisionCheck();
-				}
-				comets.remove(j);
+
+		for (int i = 0; i < comets.size(); i++) {
+			if (player.getHitbox().intersects(comets.get(i).getHitbox())) {
+				player.CollisionCheck();
+				comets.remove(i);
+			}
+		}
+
+		for (int i = 0; i < powerUps.size(); i++) {
+			if (player.getHitbox().intersects(powerUps.get(i).getHitbox())) {
+				player.addHealth(powerUps.get(i).getHealth());
+				player.addSpeed(powerUps.get(i).getSpeed());
+				powerUps.remove(i);
 
 			}
 		}
