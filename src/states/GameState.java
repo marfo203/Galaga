@@ -77,7 +77,7 @@ public abstract class GameState {
 
 		g.setFill(color);
 		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+		
 	}
 
 	/**

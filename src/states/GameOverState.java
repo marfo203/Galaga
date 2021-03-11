@@ -21,21 +21,19 @@ public class GameOverState extends GameState {
 
 	public GameOverState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
-		
+
 		this.player = player;
-		
+
 		try {
 			gameOver = new Image(new FileInputStream("gameOver.png"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		SaveName();
+
+		SaveScore();
 	}
 
-	public void SaveName() {
-		
-		
+	public void SaveScore() {
 	}
 
 	@Override

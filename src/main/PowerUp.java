@@ -48,7 +48,7 @@ import states.PlayState;
 			if (!dead) {
 				gc.drawImage(image, posX - 300, posY - 650, height, width);
 				powerHitbox = new Rectangle2D(posX - 300, posY - 650, height, width);
-				posY += speed;
+				posY += size;
 				
 			}
 			for (int i = 0; i < play.getPowerUps().size(); i++) {

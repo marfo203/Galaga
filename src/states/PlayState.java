@@ -65,6 +65,7 @@ public class PlayState extends GameState {
 	private Image cometimage;
 	private Image gameOver;
 	private Image heart;
+	private Image fast;
 
 	private GraphicsContext gc;
 
@@ -72,7 +73,7 @@ public class PlayState extends GameState {
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
 
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-
+    
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
 		this.gc = gc;
@@ -86,6 +87,7 @@ public class PlayState extends GameState {
 			gameOver = new Image(new FileInputStream("gameOver.png"));
 			cometimage = new Image(new FileInputStream("Comet.png"));
 			heart = new Image(new FileInputStream("heart.png"));
+			fast = new Image(new FileInputStream("fast.png"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
@@ -94,9 +96,6 @@ public class PlayState extends GameState {
 		spawnComets();
 		spawnPowerUps();
 
-	}
-
-	public void StartGame() {
 	}
 
 	public void spawnEnemies() {
@@ -135,11 +134,17 @@ public class PlayState extends GameState {
 		Random rand = new Random();
 		int cometamount = rand.nextInt(8) + 1;
 		int speed = rand.nextInt(5) + 1;
-		int size = rand.nextInt(1000) + 1;
-		if (size == 20 && powerUps.isEmpty()) {
-
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, 1, heart, gc,
-					this, speed);
+		int size = rand.nextInt(2000) + 1;
+		if (size == 20 || size == 22 && powerUps.isEmpty()) {
+System.out.println("pu1");
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 1, heart, gc,
+					this, 2);
+			powerUps.add(powerUp);
+		}
+		if (size == 21 && powerUps.isEmpty()) {
+			
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 0, fast, gc,
+					this, 10);
 			powerUps.add(powerUp);
 		}
 
@@ -167,7 +172,7 @@ public class PlayState extends GameState {
 		}
 
 		player.update();
-		System.out.println("Calling player update");
+		
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
@@ -181,6 +186,7 @@ public class PlayState extends GameState {
 		spawnEnemies();
 		spawnComets();
 		spawnPowerUps();
+		
 		if (player.getDead()) {
 			g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
 //			model.switchState(new GameOverState(model, g));
