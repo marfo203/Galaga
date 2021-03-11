@@ -7,26 +7,29 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import states.GameModel;
 
 public class Player extends Ship {
 	private boolean dead;
+	
 	private double posX;
 	private double posY;
+	
 	private int height = 45;
 	private int width = 55;
-	private GraphicsContext gc;
-	private int health = 3;
-	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	private int shipspeed = 20;
-	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
 	private int points = 0;
+	private int shipspeed = 20;
+	private int health;
+	
+	private GraphicsContext gc;
+	
+	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	
+	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
+	
 	private Image ship;
 	private Image explosion;
-	private GameModel model;
 
-	public Player(double posX, double posY, int speed, Image ship, GraphicsContext gc, Image explosion,
-			GameModel model) {
+	public Player(double posX, double posY, int speed, Image ship, GraphicsContext gc, Image explosion, int health) {
 		super(posX, posY, speed, ship, gc);
 
 		this.posX = posX;
@@ -35,19 +38,18 @@ public class Player extends Ship {
 		this.ship = ship;
 		this.shipspeed = speed;
 		this.explosion = explosion;
-		this.model = model;
-
+		this.health = health;
+		
 	}
 
 	public void Shoot() {
 		Bullet bullet = new Bullet(this.posX + 17, this.posY - (height / 2), -1, gc);
 		bullets.add(bullet);
-		
 	}
 
 	public void update() {
 		if (!dead) {
-			
+
 			gc.drawImage(ship, posX, posY - 30, height, width);
 			shipHitbox = new Rectangle2D(posX, posY - 30, height, width);
 			for (int i = 0; i < bullets.size(); i++) {
@@ -58,7 +60,6 @@ public class Player extends Ship {
 			for (int i = 0; i < bullets.size(); i++) {
 				bullets.get(i).update();
 			}
-
 		}
 	}
 
@@ -96,7 +97,6 @@ public class Player extends Ship {
 	}
 
 	public ArrayList<Bullet> getpBullets() {
-		// TODO Auto-generated method stub
 		return bullets;
 	}
 
@@ -110,7 +110,6 @@ public class Player extends Ship {
 
 	private void addPoints(int i) {
 		this.points += i;
-
 	}
 
 	public int getPoints() {
@@ -125,22 +124,13 @@ public class Player extends Ship {
 		return this.dead;
 	}
 
-
 	public void addHealth(int i) {
 		this.health += i;
-		
-	}
-
-	public void powerUp(PowerUp pu) {
 	}
 
 	public void addSpeed(int speed) {
 		if (this.shipspeed < 100) {
-		this.shipspeed += speed;
+			this.shipspeed += speed;
 		}
-		
-	}
-		
-		
-	
+	}	
 }

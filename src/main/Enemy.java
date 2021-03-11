@@ -22,7 +22,6 @@ public class Enemy extends Ship {
 	public Rectangle2D enemyHitbox;
 	private int difficulty = 100; // Lower number, more difficult
 	private Image ship;
-	private int shipIndex;
 
 	public Enemy(double posX, double posY, int size, Image ship, GraphicsContext gc, PlayState play) {
 		super(posX, posY, size, ship, gc);
@@ -72,9 +71,8 @@ public class Enemy extends Ship {
 		return enemyHitbox;
 	}
 
-	public void takeDamage(int j) {
+	public void takeDamage() {
 		this.dead = true;
-		this.shipIndex = j;
 	}
 
 	public ArrayList<Bullet> getEBullets() {

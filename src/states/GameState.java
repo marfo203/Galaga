@@ -1,20 +1,12 @@
 package states;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
-import main.GameFrame;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -41,7 +33,6 @@ import java.io.FileNotFoundException;
 public abstract class GameState {
 
 	protected GameModel model;
-	private Image stars;
 
 	public GameState(GameModel model) {
 		this.model = model;

@@ -13,7 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
-import main.GameFrame;
+
 import main.Player;
 
 public class ChooseShipState extends GameState {
@@ -75,12 +75,12 @@ public class ChooseShipState extends GameState {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
 
 		if (key.getCode() == KeyCode.X) {
-			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 30, xwing, gc, explosion, model);
+			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 30, xwing, gc, explosion, 2);
 			PlayState playstate = new PlayState(model, gc, player);
 			model.switchState(playstate);
 		} else if (key.getCode() == KeyCode.M) {
 			model.switchState(new PlayState(model, gc, player));
-			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 15, mfalcon, gc, explosion, model);
+			player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50, 15, mfalcon, gc, explosion, 5);
 			PlayState playstate = new PlayState(model, gc, player);
 			model.switchState(playstate);
 		} else if (key.getCode() == KeyCode.ESCAPE) {
@@ -97,7 +97,6 @@ public class ChooseShipState extends GameState {
 	@Override
 	public void deactivate() {
 		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -2,7 +2,6 @@ package states;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import main.GameFrame;
 
 /**
  * This class represents the current state of the game.
