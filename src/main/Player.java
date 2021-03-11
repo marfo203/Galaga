@@ -130,8 +130,13 @@ public class Player extends Ship {
 		return this.dead;
 	}
 
-	public void addHealth(int health2) {
-		this.health += health2;
+	public void addHealth(int i) {
+		this.health += i;
+		
+	}
+
+	public void powerUp(PowerUp pu) {
+		
 		
 	}
 }

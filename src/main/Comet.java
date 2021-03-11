@@ -56,7 +56,7 @@ public class Comet extends Ship {
 		gc.save(); // saves the current state on stack, including the current transform
 		rotate(gc, angle, topLeftX + width / 2, topLeftY + height / 2);
 		gc.drawImage(image, topLeftX, topLeftY, height * (size / 2), width * (size / 2));
-		cometHitbox = new Rectangle2D(posX - 300, posY - 650, height * (size / 2), width * (size / 2));
+		cometHitbox = new Rectangle2D(topLeftX, topLeftY, height * (size / 2), width * (size / 2));
 		gc.restore(); // back to original state (before rotation)
 	}
 

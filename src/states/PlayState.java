@@ -65,7 +65,6 @@ public class PlayState extends GameState {
 
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
-
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
 		this.gc = gc;
@@ -87,30 +86,7 @@ public class PlayState extends GameState {
 		images.add(cometimage);
 		images.add(explosion);
 
-		spawnEnemies();
-		spawnComets();
-		spawnPowerUps();
-
 	}
-
-
-	private void spawnPowerUps() {
-		Random rand = new Random();
-		int upperbound = 8;
-		int lowerbound = 1;
-		int cometamount = rand.nextInt(upperbound) + lowerbound;
-		int speed = rand.nextInt(5) + 1;
-		
-			// for (int i = 0; i < cometamount; i++) {
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, 1, heart, gc,
-					this, speed);
-			comets.add(powerUp);
-			powerUps.add(powerUp);
-			// cometamount = rand.nextInt(upperbound);
-		
-
-	}
-
 
 	public void StartGame() {
 	}
@@ -134,22 +110,32 @@ public class PlayState extends GameState {
 
 	public void spawnComets() {
 		Random rand = new Random();
-		int upperbound = 8;
-		int lowerbound = 1;
-		int cometamount = rand.nextInt(upperbound) + lowerbound;
+		int cometamount = rand.nextInt(8) + 1;
 		int speed = rand.nextInt(5) + 1;
 		int size = rand.nextInt(5) + 1;
 		if (comets.size() <= 3) {
-			// for (int i = 0; i < cometamount; i++) {
 
-			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), size, cometimage, gc, this,
-
-			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, cometimage, gc, this,
+			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, cometimage, gc, this,
 
 					speed);
 			comets.add(comet);
-			// cometamount = rand.nextInt(upperbound);
+
 		}
+	}
+
+	private void spawnPowerUps() {
+		
+		Random rand = new Random();
+		int cometamount = rand.nextInt(8) + 1;
+		int speed = rand.nextInt(5) + 1;
+		int size = rand.nextInt(1000) + 1;
+		if (size == 20 && powerUps.isEmpty()) {
+			
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, 1, heart, gc,
+					this, speed);
+			powerUps.add(powerUp);
+		}
+
 	}
 	// }
 
@@ -170,6 +156,9 @@ public class PlayState extends GameState {
 
 		// This could be a call to all our objects that we want to draw.
 		// Using the tester simply to illustrate how it could work.
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).Shoot();
+		}
 
 		player.update();
 		for (int i = 0; i < enemies.size(); i++) {
@@ -178,9 +167,13 @@ public class PlayState extends GameState {
 		for (int i = 0; i < comets.size(); i++) {
 			comets.get(i).update();
 		}
+		for (int i = 0; i < powerUps.size(); i++) {
+			powerUps.get(i).update();
+		}
 		checkCollision();
 		spawnEnemies();
 		spawnComets();
+		spawnPowerUps();
 		if (player.getDead()) {
 			gc.drawImage(gameOver, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3);
 			g.setFill(Color.WHITE);
@@ -218,11 +211,10 @@ public class PlayState extends GameState {
 		// Here one would probably instead move the player and any
 		// enemies / moving obstacles currently active.
 
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).Shoot();
-		}
 
 	}
+
+	
 
 	private void checkCollision() {
 
@@ -253,22 +245,26 @@ public class PlayState extends GameState {
 					player.getpBullets().remove(i);
 					player.Points(comets.get(j));
 
-
 				}
 			}
 		}
-		for (int j = 0; j < comets.size(); j++) {
-			if (player.getHitbox().intersects(comets.get(j).getHitbox())) {
-				if (comets.get(j) instanceof PowerUp) {
-					player.addHealth(comets.get(j).getHealth());
-				}else {
+		for (int i = 0; i < comets.size(); i++) {
+			if (player.getHitbox().intersects(comets.get(i).getHitbox())) {
 				player.CollisionCheck();
-				}
-				comets.remove(j);
-
+				comets.remove(i);
 			}
 		}
-	}
+		
+			for (int i = 0; i < powerUps.size(); i++) {
+				if (player.getHitbox().intersects(powerUps.get(i).getHitbox())) {
+					player.addHealth(1);
+					player.powerUp(powerUps.get(i));
+					powerUps.remove(i);
+
+				}
+			}
+		}
+	
 
 	/**
 	 * We currently don't have anything to activate in the PlayState so we leave
