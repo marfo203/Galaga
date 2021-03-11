@@ -1,7 +1,5 @@
 package main;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.geometry.Rectangle2D;
@@ -10,8 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import states.GameModel;
-import states.HighScoreState;
-import constants.Constants;
 
 public class Player extends Ship {
 	private boolean dead;
@@ -40,8 +36,7 @@ public class Player extends Ship {
 		this.shipspeed = speed;
 		this.explosion = explosion;
 		this.model = model;
-		
-	
+
 	}
 
 	public void Shoot() {
@@ -60,8 +55,7 @@ public class Player extends Ship {
 			gc.drawImage(explosion, posX, posY - 30, height, width);
 			for (int i = 0; i < bullets.size(); i++) {
 				bullets.get(i).update();
-				}
-			
+			}
 
 		}
 	}
@@ -87,11 +81,11 @@ public class Player extends Ship {
 	}
 
 	public void CollisionCheck() {
-		if(!dead) {
-		health -= 1;
-		if (health == 0) {
-			dead = true;
-		}
+		if (!dead) {
+			health -= 1;
+			if (health == 0) {
+				dead = true;
+			}
 		}
 	}
 
@@ -107,7 +101,7 @@ public class Player extends Ship {
 	public void Points(Ship ship) {
 		if (ship instanceof Enemy) {
 			addPoints(50);
-		} else if(ship instanceof Comet ) {
+		} else if (ship instanceof Comet) {
 			addPoints(10);
 		}
 	}
@@ -126,9 +120,9 @@ public class Player extends Ship {
 	}
 
 	public boolean getDead() {
-		// TODO Auto-generated method stub
 		return this.dead;
 	}
+
 
 	public void addHealth(int i) {
 		this.health += i;
@@ -136,7 +130,8 @@ public class Player extends Ship {
 	}
 
 	public void powerUp(PowerUp pu) {
-		
-		
 	}
+		
+		
+	
 }

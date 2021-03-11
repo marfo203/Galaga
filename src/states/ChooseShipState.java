@@ -42,7 +42,6 @@ public class ChooseShipState extends GameState {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		angle += 1;
 
 	}
