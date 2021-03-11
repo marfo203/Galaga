@@ -67,7 +67,10 @@ public class HighScoreState extends GameState {
 		g.setFont(new Font(30));
 		g.fillText(text, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 300);
 		for (int i = 0; i < highscores.size(); i++) {
-			g.fillText(highscores.get(i).toString(), SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 - 265 + i * 35);
+			int x = i + 1;
+			
+			g.fillText(String.valueOf(x)+".", SCREEN_WIDTH / 2 - 190, SCREEN_HEIGHT / 2 - 265 + i * 35);
+			g.fillText(highscores.get(i).toString(), SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 265 + i * 35);
 			if (i >= 12) {
 				break;
 			}
