@@ -74,32 +74,12 @@ import states.PlayState;
 
 	}
 
-	public void update() {
-		if (!dead) {
-			gc.drawImage(image, posX - 300, posY - 650, height, width);
-			powerHitbox = new Rectangle2D(posX - 300, posY - 650, height, width);
-			posY += speed;
+		public int getSpeed() {
+			// TODO Auto-generated method stub
+			return this.speed;
 		}
-		for (int i = 0; i < play.getPowerUps().size(); i++) {
-			if (play.getPowerUps().get(i).posY >= 1500) {
-				play.getPowerUps().remove(i);
-			}
 
-		}
 	}
 
-	@Override
-	public void CollisionCheck() {
-	}
+	
 
-	@Override
-	public Rectangle2D getHitbox() {
-		return cometHitbox;
-	}
-
-	@Override
-	public int getHealth() {
-		return this.health;
-	}
-
-}

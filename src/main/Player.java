@@ -42,10 +42,12 @@ public class Player extends Ship {
 	public void Shoot() {
 		Bullet bullet = new Bullet(this.posX + 17, this.posY - (height / 2), -1, gc);
 		bullets.add(bullet);
+		System.out.println("update");
 	}
 
 	public void update() {
 		if (!dead) {
+			System.out.println("update");
 			gc.drawImage(ship, posX, posY - 30, height, width);
 			shipHitbox = new Rectangle2D(posX, posY - 30, height, width);
 			for (int i = 0; i < bullets.size(); i++) {
@@ -130,6 +132,11 @@ public class Player extends Ship {
 	}
 
 	public void powerUp(PowerUp pu) {
+	}
+
+	public void addSpeed(int speed) {
+		// TODO Auto-generated method stub
+		
 	}
 		
 		
