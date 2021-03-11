@@ -1,8 +1,15 @@
 package states;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
+import main.GameFrame;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
@@ -40,7 +47,7 @@ public abstract class GameState {
 
 	public abstract void update();
 
-	public abstract void draw(GraphicsContext g);
+	public abstract void draw(GraphicsContext g, GameFrame gameFrame);
 
 	/**
 	 * This function is called for each keyPressed event which occurs on the
@@ -63,11 +70,17 @@ public abstract class GameState {
 	 *              redundancy.
 	 * @throws FileNotFoundException 
 	 */
-	public void drawBg(GraphicsContext g, Color color) {
+	public void drawBg(GraphicsContext g, Color color, GameFrame gameFrame) {
 		// Here we can draw a background if we so desire.
 		
-		g.setFill(color);
-		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		Image image = new Image("/star.gif");
+		BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+				BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+		Background bg = new Background(bgImage);
+		gameFrame.setBackground(bg);
+		
+//		g.setFill(color);
+//		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 
 	}

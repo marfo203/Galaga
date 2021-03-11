@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
+import main.GameFrame;
 import main.Player;
 
 public class ChooseShipState extends GameState {
@@ -52,8 +53,8 @@ public class ChooseShipState extends GameState {
 	}
 
 	@Override
-	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+	public void draw(GraphicsContext g, GameFrame gameFrame) {
+		drawBg(g, bgColor, gameFrame);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30));

@@ -10,7 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import main.GameFrame;
 import main.Player;
 
 public class GameOverState extends GameState {
@@ -42,8 +42,8 @@ public class GameOverState extends GameState {
 	}
 
 	@Override
-	public void draw(GraphicsContext g) {
-		drawBg(g, color);
+	public void draw(GraphicsContext g, GameFrame gameFrame) {
+		drawBg(g, color, gameFrame);
 		
 		g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
 	}

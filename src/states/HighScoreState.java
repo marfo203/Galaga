@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import main.GameFrame;
 
 public class HighScoreState extends GameState {
 
@@ -28,8 +29,8 @@ public class HighScoreState extends GameState {
 	}
 
 	@Override
-	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+	public void draw(GraphicsContext g, GameFrame gameFrame) {
+		drawBg(g, bgColor, gameFrame);
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); 
 		g.fillText(informationText, SCREEN_WIDTH / 2-150, SCREEN_HEIGHT / 2);

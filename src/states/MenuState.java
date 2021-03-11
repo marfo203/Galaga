@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import main.GameFrame;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
@@ -33,8 +34,8 @@ public class MenuState extends GameState {
 	 * Draws information text to the screen
 	 */
 	@Override
-	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+	public void draw(GraphicsContext g, GameFrame gameFrame) {
+		drawBg(g, bgColor, gameFrame);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); // Big letters

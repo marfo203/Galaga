@@ -2,6 +2,7 @@ package states;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import main.GameFrame;
 
 /**
  * This class represents the current state of the game.
@@ -62,8 +63,9 @@ public class GameModel {
 	/**
 	 * @param g Graphics object passed from GamePanel This function delegates
 	 *          drawing from the GamePanel to the current state
+	 * @param gameFrame 
 	 */
-	public void draw(GraphicsContext g) {
-		currentState.draw(g);
+	public void draw(GraphicsContext g, GameFrame gameFrame) {
+		currentState.draw(g, gameFrame);
 	}
 }

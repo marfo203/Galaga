@@ -2,12 +2,15 @@ package states;
 
 import main.Comet;
 import main.Enemy;
+import main.GameFrame;
 import main.Player;
 import main.PowerUp;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -17,7 +20,9 @@ import static constants.Constants.SCREEN_WIDTH;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * This state represents the Playing State of the Game The main responsibility
@@ -60,6 +65,8 @@ public class PlayState extends GameState {
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
 
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+	private String name;
+	private String c;
 
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
@@ -91,12 +98,10 @@ public class PlayState extends GameState {
 		int cometamount = rand.nextInt(upperbound) + lowerbound;
 		int speed = rand.nextInt(5) + 1;
 
-		// for (int i = 0; i < cometamount; i++) {
 		powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 50), speed, 1, heart, gc, this,
 				speed);
 		comets.add(powerUp);
 		powerUps.add(powerUp);
-		// cometamount = rand.nextInt(upperbound);
 
 	}
 
@@ -109,7 +114,6 @@ public class PlayState extends GameState {
 		int enemyamount = rand.nextInt(upperbound);
 
 		if (enemies.size() <= 2) {
-			// for (int i = 0; i < enemyamount; i++) {
 			Random rand1 = new Random();
 			int upperbound1 = 5;
 			int spawnlocation = rand1.nextInt(upperbound1);
@@ -138,8 +142,8 @@ public class PlayState extends GameState {
 	 * Draws information text to the screen.
 	 */
 	@Override
-	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+	public void draw(GraphicsContext g, GameFrame gameFrame) {
+		drawBg(g, bgColor, gameFrame);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(20)); // Big letters
@@ -168,7 +172,11 @@ public class PlayState extends GameState {
 			g.setFill(Color.WHITE);
 			g.setFont(new Font(30)); // Big letters
 			// Print the information text, centered on the canvas
-			g.fillText("Your Score: " + player.getPoints() + "\nPress ENTER to continue", SCREEN_WIDTH / 4 - 40, SCREEN_HEIGHT / 1.5);
+			g.fillText("Your Score: " + player.getPoints() + "\nEnter your name: ", SCREEN_WIDTH / 4 - 40, SCREEN_HEIGHT / 1.5);
+			TextField tf = new TextField();
+			GridPane root = new GridPane();
+			root.addRow(0, tf);
+			
 		}
 	}
 
@@ -273,7 +281,6 @@ public class PlayState extends GameState {
 	}
 
 	public ArrayList<PowerUp> getPowerUps() {
-		// TODO Auto-generated method stub
 		return powerUps;
 	}
 }
