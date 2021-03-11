@@ -14,6 +14,7 @@ import main.GameFrame;
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -70,17 +71,21 @@ public abstract class GameState {
 	 *              redundancy.
 	 * @throws FileNotFoundException 
 	 */
-	public void drawBg(GraphicsContext g, Color color, GameFrame gameFrame) {
-		// Here we can draw a background if we so desire.
+	public void drawBg(GraphicsContext g, Color color, GameFrame gameFrame)  {
+//		Image image = null;
+//		// Here we can draw a background if we so desire.
+//		try {
+//		 image = new Image(new FileInputStream("star.gif"));
+//	} catch (FileNotFoundException e) {
+//		System.out.println("Unable to find image-files!");
+//	}
+//		BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+//				BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+//		Background bg = new Background(bgImage);
+//		gameFrame.setBackground(bg);
 		
-		Image image = new Image("/star.gif");
-		BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
-				BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-		Background bg = new Background(bgImage);
-		gameFrame.setBackground(bg);
-		
-//		g.setFill(color);
-//		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		g.setFill(color);
+		g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 
 	}

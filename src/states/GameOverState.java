@@ -21,20 +21,20 @@ public class GameOverState extends GameState {
 
 	public GameOverState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
-		
+
 		this.player = player;
-		
+
 		try {
 			gameOver = new Image(new FileInputStream("gameOver.png"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		SaveScore();
 	}
 
 	public void SaveScore() {
-		
+
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class GameOverState extends GameState {
 	@Override
 	public void draw(GraphicsContext g, GameFrame gameFrame) {
 		drawBg(g, color, gameFrame);
-		
+
 		g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
 	}
 

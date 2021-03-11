@@ -34,7 +34,7 @@ public class GameFrame extends HBox {
 	}
 
 	public void repaint() {
-		panel.repaint();
+		panel.repaint(this);
 	}
 
 	public GraphicsContext getGC() {
