@@ -24,8 +24,8 @@ public class GamePanel extends Canvas {
         this.setHeight(height);
     }
 
-    public void repaint(GameFrame gameframe) {
-    	model.draw(gc, gameframe);
+    public void repaint() {
+    	model.draw(gc);
     }
 
 	public GraphicsContext getGC() {

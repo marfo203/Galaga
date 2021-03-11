@@ -5,7 +5,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import main.GameFrame;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
@@ -23,6 +22,7 @@ public class MenuState extends GameState {
 	private String informationText;
 	private Color bgColor;
 	private Color fontColor;
+
 	public MenuState(GameModel model) {
 		super(model);
 		informationText = "Press Enter To Play\nPress H for Highscore\nPress Escape to exit";
@@ -40,7 +40,7 @@ public class MenuState extends GameState {
 		g.setFill(fontColor);
 		g.setFont(new Font(30)); // Big letters
 		// Print the information text, centered on the canvas
-		g.fillText(informationText, SCREEN_WIDTH / 2-150, SCREEN_HEIGHT / 2);
+		g.fillText(informationText, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2);
 		// Can also use:
 		// g.setStroke(fontColor);
 		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);

@@ -2,34 +2,26 @@ package states;
 
 import main.Comet;
 import main.Enemy;
-import main.GameFrame;
 import main.Player;
 import main.PowerUp;
+
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * This state represents the Playing State of the Game The main responsibility
@@ -71,14 +63,14 @@ public class PlayState extends GameState {
 
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Comet> comets = new ArrayList<Comet>();
-
 	private ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-    
+
 	public PlayState(GameModel model, GraphicsContext gc, Player player) {
 		super(model);
 		this.gc = gc;
 		this.model = model;
 		this.player = player;
+
 		bgColor = Color.BLACK;
 		fontColor = Color.WHITE;
 
@@ -99,10 +91,6 @@ public class PlayState extends GameState {
 	}
 
 	public void spawnEnemies() {
-		Random rand = new Random();
-		int upperbound = 20;
-		int enemyamount = rand.nextInt(upperbound);
-
 		if (enemies.size() <= 2) {
 			Random rand1 = new Random();
 			int upperbound1 = 5;
@@ -118,14 +106,10 @@ public class PlayState extends GameState {
 		Random rand = new Random();
 		int cometamount = rand.nextInt(8) + 1;
 		int speed = rand.nextInt(5) + 1;
-		int size = rand.nextInt(5) + 1;
 		if (comets.size() <= 3) {
-
 			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, cometimage, gc, this,
-
 					speed);
 			comets.add(comet);
-
 		}
 	}
 
@@ -133,21 +117,18 @@ public class PlayState extends GameState {
 
 		Random rand = new Random();
 		int cometamount = rand.nextInt(8) + 1;
-		int speed = rand.nextInt(5) + 1;
 		int size = rand.nextInt(2000) + 1;
 		if (size == 20 || size == 22 && powerUps.isEmpty()) {
-System.out.println("pu1");
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 1, heart, gc,
-					this, 2);
+			System.out.println("pu1");
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 1, heart,
+					gc, this, 2);
 			powerUps.add(powerUp);
 		}
 		if (size == 21 && powerUps.isEmpty()) {
-			
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 0, fast, gc,
-					this, 10);
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 0, fast,
+					gc, this, 10);
 			powerUps.add(powerUp);
 		}
-
 	}
 
 	/**
@@ -172,7 +153,7 @@ System.out.println("pu1");
 		}
 
 		player.update();
-		
+
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
@@ -186,10 +167,9 @@ System.out.println("pu1");
 		spawnEnemies();
 		spawnComets();
 		spawnPowerUps();
-		
+
 		if (player.getDead()) {
 			g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
-//			model.switchState(new GameOverState(model, g));
 			g.setFill(Color.WHITE);
 			g.setFont(new Font(30)); // Big letters
 			// Print the information text, centered on the canvas
@@ -219,17 +199,17 @@ System.out.println("pu1");
 		}
 	}
 
-	private void SaveScoreToFile() {		
-			try {
-				FileWriter output = (new FileWriter("HighScores.txt", true));
-				output.write(player.getPoints() + "\n");
-				output.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	private void SaveScoreToFile() {
+		try {
+			FileWriter output = (new FileWriter("HighScores.txt", true));
+			output.write(player.getPoints() + "\n");
+			output.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
 	@Override
 	public void update() {
@@ -245,7 +225,7 @@ System.out.println("pu1");
 
 				if (player.getpBullets().get(i).getBullethitbox().intersects(enemies.get(j).getHitbox())) {
 					player.getpBullets().remove(i);
-					enemies.get(j).takeDamage(j);
+					enemies.get(j).takeDamage();
 					player.Points(enemies.get(j));
 					enemies.remove(j);
 				}
@@ -263,10 +243,8 @@ System.out.println("pu1");
 			for (int i = 0; i < player.getpBullets().size(); i++) {
 				if (player.getpBullets().get(i).getBullethitbox().intersects(comets.get(j).getHitbox())) {
 					comets.remove(j);
-
 					player.getpBullets().remove(i);
 					player.Points(comets.get(j));
-
 				}
 			}
 		}
@@ -283,7 +261,6 @@ System.out.println("pu1");
 				player.addHealth(powerUps.get(i).getHealth());
 				player.addSpeed(powerUps.get(i).getSpeed());
 				powerUps.remove(i);
-
 			}
 		}
 	}
