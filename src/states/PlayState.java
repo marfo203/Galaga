@@ -106,8 +106,9 @@ public class PlayState extends GameState {
 		Random rand = new Random();
 		int cometamount = rand.nextInt(8) + 1;
 		int speed = rand.nextInt(5) + 1;
+		int size = rand.nextInt(80) + 50;
 		if (comets.size() <= 3) {
-			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, cometimage, gc, this,
+			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), size, cometimage, gc, this,
 					speed);
 			comets.add(comet);
 		}
@@ -242,9 +243,10 @@ public class PlayState extends GameState {
 		for (int j = 0; j < comets.size(); j++) {
 			for (int i = 0; i < player.getpBullets().size(); i++) {
 				if (player.getpBullets().get(i).getBullethitbox().intersects(comets.get(j).getHitbox())) {
-					comets.remove(j);
+					System.out.println(comets.size());
 					player.getpBullets().remove(i);
 					player.Points(comets.get(j));
+					comets.remove(j);
 				}
 			}
 		}

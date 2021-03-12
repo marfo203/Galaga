@@ -9,8 +9,6 @@ import states.PlayState;
 public class Comet extends Ship {
 
 	private boolean dead;
-	private int height = 50;
-	private int width = 50;
 	private int posX;
 	private int posY;
 	private Rectangle2D cometHitbox;
@@ -54,9 +52,9 @@ public class Comet extends Ship {
 
 	private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double topLeftX, double topLeftY) {
 		gc.save(); // saves the current state on stack, including the current transform
-		rotate(gc, angle, topLeftX + width / 2, topLeftY + height / 2);
-		gc.drawImage(image, topLeftX, topLeftY, height * (size / 2), width * (size / 2));
-		cometHitbox = new Rectangle2D(topLeftX, topLeftY, height * (size / 2), width * (size / 2));
+		rotate(gc, angle, topLeftX + size / 2, topLeftY + size / 2);
+		gc.drawImage(image, topLeftX, topLeftY, size, size);
+		cometHitbox = new Rectangle2D(topLeftX, topLeftY, size, size);
 		gc.restore(); // back to original state (before rotation)
 	}
 
