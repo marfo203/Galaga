@@ -8,9 +8,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import states.PlayState;
 
+/**
+ * This class handles the Enemy movement and bullet frequency depending on the
+ * integer difficulty.
+ * 
+ * @author Berggren
+ *
+ */
 public class Enemy extends Ship {
 
-	private int speed = 1; // Constant speed. Maybe change depending on score
+	private int speed; // Constant speed. Maybe change depending on score
 	private boolean dead;
 	private double posX = 0;
 	private double posY = 0;
@@ -23,12 +30,13 @@ public class Enemy extends Ship {
 	private int difficulty = 100; // Lower number, more difficult
 	private Image ship;
 
-	public Enemy(double posX, double posY, int size, Image ship, GraphicsContext gc, PlayState play) {
-		super(posX, posY, size, ship, gc);
+	public Enemy(double posX, double posY, int speed, Image ship, GraphicsContext gc, PlayState play) {
+		super(posX, posY, speed, ship, gc);
 		this.posX = posX;
 		this.posY = posY;
 		this.ship = ship;
 		this.gc = gc;
+		this.speed = speed;
 
 	}
 

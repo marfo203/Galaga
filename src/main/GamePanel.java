@@ -25,7 +25,7 @@ public class GamePanel extends Canvas {
 	}
 
 
-	public void repaint(GameFrame gameframe) {
+	public void repaint() {
 		model.draw(gc);
 	}
 

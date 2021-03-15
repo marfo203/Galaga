@@ -16,18 +16,32 @@ import javafx.scene.transform.Rotate;
 
 import main.Player;
 
+/**
+ * This class creates the state for choosing ship. Creates a player and a
+ * playstate to put that player in. When a ship is chosen the playstate is
+ * activated.
+ * 
+ * @author Berggren
+ *
+ */
+
 public class ChooseShipState extends GameState {
 
-	private Color bgColor = Color.BLACK;
 	private Color fontColor = Color.WHITE;
+
 	private Image xwing;
 	private Image mfalcon;
+	private Image explosion;
+	private Image bgImage;
+
 	private Player player;
+
 	private String informationText = "Press M for Millenium Falcon\nPress X for X-Wing";
+
 	private double height = 175;
 	private double width = 135;
+
 	private int angle = 0;
-	private Image explosion;
 
 	public ChooseShipState(GameModel model, GraphicsContext gc) {
 		super(model);
@@ -36,6 +50,7 @@ public class ChooseShipState extends GameState {
 			mfalcon = new Image(new FileInputStream("ship.png"));
 			xwing = new Image(new FileInputStream("X-wing.png"));
 			explosion = new Image(new FileInputStream("explosion.gif"));
+			bgImage = new Image(new FileInputStream("stars2.gif"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -54,7 +69,7 @@ public class ChooseShipState extends GameState {
 
 	@Override
 	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+		drawBg(g, bgImage);
 
 		g.setFill(fontColor);
 		g.setFont(new Font(30));
@@ -86,17 +101,6 @@ public class ChooseShipState extends GameState {
 		} else if (key.getCode() == KeyCode.ESCAPE) {
 			model.switchState(new MenuState(model));
 		}
-	}
-
-	@Override
-	public void activate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deactivate() {
-		// TODO Auto-generated method stub
 	}
 
 }

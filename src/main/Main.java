@@ -37,14 +37,14 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage gameStage) throws Exception {	
+	public void start(Stage gameStage) throws Exception {
 		gameStage.setTitle("TotallyAwesomeGame, sort of");
 		gameStage.setWidth(600);
 		gameStage.setHeight(700);
 		GameModel model = new GameModel();
 		GameFrame frame = new GameFrame(model, 600, 700);
 		Scene gameScene = new Scene(frame);
-		
+
 		// Set the target number of frames per second
 		final double targetFps = 120.0;
 		// Calculate frequency in nano seconds

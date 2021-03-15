@@ -6,6 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.transform.Rotate;
 import states.PlayState;
 
+/**
+ * Draws rotating comets, creates the hitbox and handles the comets path.
+ * 
+ * @author Berggren
+ *
+ */
+
 public class Comet extends Ship {
 
 	private boolean dead;
@@ -29,7 +36,7 @@ public class Comet extends Ship {
 		this.gc = gc;
 		this.play = play;
 		this.size = size;
-		
+
 	}
 
 	private void rotate(GraphicsContext gc, double angle, double px, double py) {

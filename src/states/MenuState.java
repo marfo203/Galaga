@@ -1,6 +1,7 @@
 package states;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -9,52 +10,40 @@ import javafx.scene.text.Font;
 import static constants.Constants.SCREEN_HEIGHT;
 import static constants.Constants.SCREEN_WIDTH;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 /**
  * This state represents the menu of the Game The main responsibility of this
  * class is to allow the user to swap state to the PlayState
  */
 public class MenuState extends GameState {
-	/*
-	 * The following three variables are just used to show that a change of state
-	 * can be made. The same variables also exist in the PlayState, can you think of
-	 * a way to make this more general and not duplicate variables?
-	 */
+
 	private String informationText;
-	private Color bgColor;
 	private Color fontColor;
+	private Image bgImage;
 
 	public MenuState(GameModel model) {
 		super(model);
 		informationText = "Press Enter To Play\nPress H for Highscore\nPress Escape to exit";
-		bgColor = Color.BLACK;
 		fontColor = Color.WHITE;
+
+		try {
+			bgImage = new Image(new FileInputStream("Menuimage.jpg"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	/**
-	 * Draws information text to the screen
-	 */
 	@Override
 	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+		drawBg(g, bgImage);
 
 		g.setFill(fontColor);
-		g.setFont(new Font(30)); // Big letters
-		// Print the information text, centered on the canvas
-		g.fillText(informationText, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2);
-		// Can also use:
-		// g.setStroke(fontColor);
-		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		g.setFont(new Font(30));
+		g.fillText(informationText, SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 200);
 	}
 
-	/**
-	 *
-	 * @param key KeyEvent representing the pressed key
-	 *
-	 *            This function prints the pressed key to the console it's used to
-	 *            show that a change of state has been made
-	 *
-	 *            For more information see GameState
-	 */
 	@Override
 	public void keyPressed(KeyEvent key, GraphicsContext gc) {
 		System.out.println("Trycker på " + key.getText() + " i MenuState");
@@ -68,31 +57,8 @@ public class MenuState extends GameState {
 		}
 	}
 
-	/**
-	 * We have nothing to update in the menu, no moving objects etc. so we leave the
-	 * update method empty.
-	 */
 	@Override
 	public void update() {
-	}
-
-	/**
-	 * We currently don't have anything to activate in the MenuState so we leave
-	 * this method empty in this case.
-	 */
-	@Override
-	public void activate() {
-
-	}
-
-	/**
-	 * We currently don't have anything to deactivate in the MenuState so we leave
-	 * this method empty in this case.
-	 */
-
-	@Override
-	public void deactivate() {
-
 	}
 
 }

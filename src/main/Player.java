@@ -8,24 +8,32 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * This class handles the player movement and boundries inside the GameFrame.
+ * Checks Collision with other objects. Shoots when space is pressed. Keeps
+ * track of health and points.
+ * 
+ * @author Berggren
+ *
+ */
 public class Player extends Ship {
 	private boolean dead;
-	
+
 	private double posX;
 	private double posY;
-	
+
 	private int height = 45;
 	private int width = 55;
 	private int points = 0;
 	private int shipspeed = 20;
 	private int health;
-	
+
 	private GraphicsContext gc;
-	
+
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	
+
 	private Rectangle2D shipHitbox = new Rectangle2D(posX, posY, height, width);
-	
+
 	private Image ship;
 	private Image explosion;
 
@@ -39,7 +47,7 @@ public class Player extends Ship {
 		this.shipspeed = speed;
 		this.explosion = explosion;
 		this.health = health;
-		
+
 	}
 
 	public void Shoot() {
@@ -49,7 +57,6 @@ public class Player extends Ship {
 
 	public void update() {
 		if (!dead) {
-
 			gc.drawImage(ship, posX, posY - 30, height, width);
 			shipHitbox = new Rectangle2D(posX, posY - 30, height, width);
 			for (int i = 0; i < bullets.size(); i++) {
@@ -132,5 +139,5 @@ public class Player extends Ship {
 		if (this.shipspeed < 100) {
 			this.shipspeed += speed;
 		}
-	}	
+	}
 }

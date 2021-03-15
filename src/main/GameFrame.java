@@ -17,7 +17,6 @@ public class GameFrame extends HBox {
 	private GraphicsContext gc;
 	
 	public GameFrame(GameModel model, int width, int height) {
-		// Create a new GamePanel and add's it to the frame
 		panel = new GamePanel(model, width, height);
 		this.getChildren().add(panel);
 		gc = panel.getGC();

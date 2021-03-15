@@ -24,28 +24,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This state represents the Playing State of the Game The main responsibility
- * of this class is to; - create Game Objects - update Game Objects - draw Game
- * Objects Game Objects are for instance; players, enemies, npc's, etc...
+ * This class represents the playstate where the actual game is played. Handles
+ * the creation of objects like enemies and powerups as well as handling
+ * collisions between the objects.
+ * 
+ * @author Berggren
  *
- * The PlayState can also be thought off as a blue print where data is loaded
- * into some container from a file or some other type of data storage.
- *
- * It can also be created by some class responsible for object creation and then
- * passed to the PlayState as a parameter. This means all the PlayState has to
- * do is receive a list of objects, store them in some container and then for
- * every object in that container update and render that object.
- *
- * This way you can let the user define different Levels based on what
- * parameters are passed into the PlayState.
  */
 public class PlayState extends GameState {
-	/*
-	 * The following three variables are just used to show that a change of state
-	 * can be made. The same variables also exist in the MenuState, can you think of
-	 * a way to make this more general and not duplicate variables?
-	 */
-	private Color bgColor;
 	private Color fontColor;
 
 	private Player player;
@@ -58,6 +44,7 @@ public class PlayState extends GameState {
 	private Image gameOver;
 	private Image heart;
 	private Image fast;
+	private Image bgImage;
 
 	private GraphicsContext gc;
 
@@ -71,7 +58,6 @@ public class PlayState extends GameState {
 		this.model = model;
 		this.player = player;
 
-		bgColor = Color.BLACK;
 		fontColor = Color.WHITE;
 
 		try {
@@ -80,6 +66,7 @@ public class PlayState extends GameState {
 			cometimage = new Image(new FileInputStream("Comet.png"));
 			heart = new Image(new FileInputStream("heart.png"));
 			fast = new Image(new FileInputStream("fast.png"));
+			bgImage = new Image(new FileInputStream("stars2.gif"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to find image-files!");
 		}
@@ -92,12 +79,12 @@ public class PlayState extends GameState {
 
 	public void spawnEnemies() {
 		if (enemies.size() <= 2) {
-			Random rand1 = new Random();
-			int upperbound1 = 5;
-			int spawnlocation = rand1.nextInt(upperbound1);
+			Random rand = new Random();
+			int spawnlocation = rand.nextInt(5);
+			int speed = rand.nextInt(3) + 1;
 
 			enemy = new Enemy((SCREEN_WIDTH / 2 - 325) + spawnlocation * 65, SCREEN_HEIGHT - 50 + spawnlocation * 65,
-					spawnlocation, tieFighter, gc, this);
+					speed, tieFighter, gc, this);
 			enemies.add(enemy);
 		}
 	}
@@ -106,7 +93,7 @@ public class PlayState extends GameState {
 		Random rand = new Random();
 		int cometamount = rand.nextInt(8) + 1;
 		int speed = rand.nextInt(5) + 1;
-		int size = rand.nextInt(80) + 50;
+		int size = rand.nextInt(70) + 50;
 		if (comets.size() <= 3) {
 			comet = new Comet((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), size, cometimage, gc, this,
 					speed);
@@ -118,37 +105,28 @@ public class PlayState extends GameState {
 
 		Random rand = new Random();
 		int cometamount = rand.nextInt(8) + 1;
-		int size = rand.nextInt(2000) + 1;
-		if (size == 20 || size == 22 && powerUps.isEmpty()) {
-			System.out.println("pu1");
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 1, heart,
-					gc, this, 2);
+		int speed = rand.nextInt(8) + 1;
+		int spawnfrequency = rand.nextInt(2000) + 1;
+		if (spawnfrequency == 20 || spawnfrequency == 22 && powerUps.isEmpty()) {
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, 1, heart, gc,
+					this);
 			powerUps.add(powerUp);
 		}
-		if (size == 21 && powerUps.isEmpty()) {
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), cometamount, 0, fast,
-					gc, this, 10);
+		if (spawnfrequency == 21 && powerUps.isEmpty()) {
+			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed + 3, 0, fast, gc,
+					this);
 			powerUps.add(powerUp);
 		}
 	}
 
-	/**
-	 * Draws information text to the screen.
-	 */
 	@Override
 	public void draw(GraphicsContext g) {
-		drawBg(g, bgColor);
+		drawBg(g, bgImage);
 
 		g.setFill(fontColor);
-		g.setFont(new Font(20)); // Big letters
+		g.setFont(new Font(20));
 		g.fillText("Score: " + player.getPoints() + "\nHealth: " + player.getHealth(), 20, 20);
 
-		// Can also use:
-		// g.setStroke(fontColor);
-		// g.strokeText(informationText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-
-		// This could be a call to all our objects that we want to draw.
-		// Using the tester simply to illustrate how it could work.
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).Shoot();
 		}
@@ -172,8 +150,7 @@ public class PlayState extends GameState {
 		if (player.getDead()) {
 			g.drawImage(gameOver, SCREEN_WIDTH / 4 + 20, SCREEN_HEIGHT / 3);
 			g.setFill(Color.WHITE);
-			g.setFont(new Font(30)); // Big letters
-			// Print the information text, centered on the canvas
+			g.setFont(new Font(30));
 			g.fillText("Your Score: " + player.getPoints() + "\nPress ENTER to continue", SCREEN_WIDTH / 4 - 40,
 					SCREEN_HEIGHT / 1.5);
 		}
@@ -214,8 +191,6 @@ public class PlayState extends GameState {
 
 	@Override
 	public void update() {
-		// Here one would probably instead move the player and any
-		// enemies / moving obstacles currently active.
 
 	}
 
@@ -240,15 +215,20 @@ public class PlayState extends GameState {
 				}
 			}
 		}
-		for (int j = 0; j < comets.size(); j++) {
+		Comet toRemove = null;
+		for (Comet comet : comets) {
 			for (int i = 0; i < player.getpBullets().size(); i++) {
-				if (player.getpBullets().get(i).getBullethitbox().intersects(comets.get(j).getHitbox())) {
+				if (player.getpBullets().get(i).getBullethitbox().intersects(comet.getHitbox())) {
 					System.out.println(comets.size());
 					player.getpBullets().remove(i);
-					player.Points(comets.get(j));
-					comets.remove(j);
+					player.Points(comet);
+					toRemove = comet;
 				}
 			}
+		}
+		if (toRemove != null) {
+			comets.remove(toRemove);
+			toRemove = null;
 		}
 
 		for (int i = 0; i < comets.size(); i++) {
@@ -267,22 +247,6 @@ public class PlayState extends GameState {
 		}
 	}
 
-	/**
-	 * We currently don't have anything to activate in the PlayState so we leave
-	 * this method empty in this case.
-	 */
-	@Override
-	public void activate() {
-	}
-
-	/**
-	 * We currently don't have anything to deactivate in the PlayState so we leave
-	 * this method empty in this case.
-	 */
-	@Override
-	public void deactivate() {
-	}
-
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
@@ -294,4 +258,5 @@ public class PlayState extends GameState {
 	public ArrayList<PowerUp> getPowerUps() {
 		return powerUps;
 	}
+
 }
