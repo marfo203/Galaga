@@ -2,9 +2,10 @@ package states;
 
 import main.Comet;
 import main.Enemy;
+import main.HeartPowerUp;
 import main.Player;
 import main.PowerUp;
-
+import main.SpeedPowerUp;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -108,12 +109,12 @@ public class PlayState extends GameState {
 		int speed = rand.nextInt(8) + 1;
 		int spawnfrequency = rand.nextInt(2000) + 1;
 		if (spawnfrequency == 20 || spawnfrequency == 22 && powerUps.isEmpty()) {
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed, 1, heart, gc,
+			powerUp = new HeartPowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), 1, heart, gc,
 					this);
 			powerUps.add(powerUp);
 		}
 		if (spawnfrequency == 21 && powerUps.isEmpty()) {
-			powerUp = new PowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed + 3, 0, fast, gc,
+			powerUp = new SpeedPowerUp((SCREEN_WIDTH / 2) + cometamount * 65, (SCREEN_HEIGHT - 200), speed + 3, fast, gc,
 					this);
 			powerUps.add(powerUp);
 		}

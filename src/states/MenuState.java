@@ -1,4 +1,4 @@
-package states;
+ package states;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

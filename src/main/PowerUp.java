@@ -12,7 +12,7 @@ import states.PlayState;
  * @author Berggren
  *
  */
-public class PowerUp extends Ship {
+public abstract class PowerUp extends Ship {
 
 	private int speed; // Constant speed. Maybe shange depending on score
 	private boolean dead;
@@ -26,19 +26,27 @@ public class PowerUp extends Ship {
 	private PlayState play;
 
 	private Rectangle2D powerHitbox;
-	private int health;
 
 	public PowerUp(int posX, int posY, int speed, int health, Image image, GraphicsContext gc, PlayState play) {
-		super(posX, posY, health, image, gc, play, speed);
+		super(posX, posY, health, image, gc, play);
 
 		this.posX = posX;
 		this.posY = posY;
 		this.image = image;
-		this.speed = speed;
 		this.gc = gc;
 		this.play = play;
-		this.health = health;
 
+	}
+
+	public PowerUp(int posX, int posY, int speed, Image image, GraphicsContext gc, PlayState play) {
+		super(posX, posY, image, gc, play, speed);
+		this.posX = posX;
+		this.posY = posY;
+		this.image = image;
+		this.gc = gc;
+		this.play = play;
+		this.speed = speed;
+		
 	}
 
 	public void update() {
@@ -64,12 +72,8 @@ public class PowerUp extends Ship {
 		return this.powerHitbox;
 	}
 
-	public int getHealth() {
-		return this.health;
-	}
+	public abstract int getHealth();
 
-	public int getSpeed() {
-		return this.speed;
-	}
+	public abstract int getSpeed();
 
 }

@@ -7,12 +7,15 @@ import states.PlayState;
 
 public abstract class Ship {
 	public Ship(double posX, double posY, int size, Image ship, GraphicsContext gc) {
-
 	}
 
-	public Ship(int posX, int posY, int health, Image image, GraphicsContext gc, PlayState play, int speed) {
-
+	public Ship(int posX, int posY, int health, Image image, GraphicsContext gc, PlayState play) {
 	}
+	
+	public Ship(int posX, int posY, Image image, GraphicsContext gc, PlayState play, int speed) {
+	}
+	
+	
 
 	public abstract void CollisionCheck();
 
